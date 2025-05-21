@@ -1,0 +1,124 @@
+{
+  "kind": "youtube#searchListResponse",
+  "etag": "mockEtag12345",
+  "pageInfo": {
+    "totalResults": 1000000,
+    "resultsPerPage": 15
+  },
+  "items": [
+    {
+      "id": { "kind": "youtube#video", "videoId": "a1b2c3d4e5" },
+      "snippet": {
+        "publishedAt": "2023-06-01T12:00:00Z",
+        "channelId": "channel1",
+        "title": "Chill Lofi Beats for Study Sessions",
+        "description": "Perfect for focus and study.",
+        "thumbnails": {
+          "medium": {
+            "url": "https://i.ytimg.com/vi/a1b2c3d4e5/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          }
+        },
+        "channelTitle": "Lofi Central",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-06-01T12:00:00Z"
+      }
+    },
+    {
+      "id": { "kind": "youtube#video", "videoId": "f6g7h8i9j0" },
+      "snippet": {
+        "publishedAt": "2023-06-02T10:30:00Z",
+        "channelId": "channel2",
+        "title": "Relaxing Lofi for Sleep & Chill",
+        "description": "Gentle beats for winding down.",
+        "thumbnails": {
+          "medium": {
+            "url": "https://i.ytimg.com/vi/f6g7h8i9j0/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          }
+        },
+        "channelTitle": "Sleepy Sounds",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-06-02T10:30:00Z"
+      }
+    },
+    {
+      "id": { "kind": "youtube#video", "videoId": "k1l2m3n4o5" },
+      "snippet": {
+        "publishedAt": "2023-06-03T08:15:00Z",
+        "channelId": "channel3",
+        "title": "Lofi Jazzhop: Vintage Beats",
+        "description": "Jazz-inspired chillhop beats.",
+        "thumbnails": {
+          "medium": {
+            "url": "https://i.ytimg.com/vi/k1l2m3n4o5/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          }
+        },
+        "channelTitle": "Vinyl Vibes",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-06-03T08:15:00Z"
+      }
+    },
+    {
+      "id": { "kind": "youtube#video", "videoId": "p9q8r7s6t5" },
+      "snippet": {
+        "publishedAt": "2023-06-04T14:00:00Z",
+        "channelId": "channel4",
+        "title": "Lofi Chillhop Mix 2023",
+        "description": "A new wave of smooth beats.",
+        "thumbnails": {
+          "medium": {
+            "url": "https://i.ytimg.com/vi/p9q8r7s6t5/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          }
+        },
+        "channelTitle": "Beat Cloud",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-06-04T14:00:00Z"
+      }
+    },
+    {
+      "id": { "kind": "youtube#video", "videoId": "u1v2w3x4y5" },
+      "snippet": {
+        "publishedAt": "2023-06-05T16:45:00Z",
+        "channelId": "channel5",
+        "title": "Study Beats Vol. 4",
+        "description": "Focus mode activated.",
+        "thumbnails": {
+          "medium": {
+            "url": "https://i.ytimg.com/vi/u1v2w3x4y5/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          }
+        },
+        "channelTitle": "StudyTime Radio",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-06-05T16:45:00Z"
+      }
+    },
+    {
+      "id": { "kind": "youtube#video", "videoId": "z9y8x7w6v5" },
+      "snippet": {
+        "publishedAt": "2023-06-15T09:00:00Z",
+        "channelId": "channel15",
+        "title": "Lofi Spacewalk – Beats from the Cosmos",
+        "description": "Interstellar vibes only.",
+        "thumbnails": {
+          "medium": {
+            "url": "https://i.ytimg.com/vi/z9y8x7w6v5/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          }
+        },
+        "channelTitle": "Orbit Loops",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-06-15T09:00:00Z"
+      }
+    }
+  ]
+}
