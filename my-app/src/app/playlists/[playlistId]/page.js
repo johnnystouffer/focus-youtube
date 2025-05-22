@@ -1,14 +1,15 @@
 export default function SearchPage() {
-    const data = require('../vids.json');
+    const data = require('./vids.json');
 
     return (
         <div className="w-screen h-screen flex flex-col items-center justify-start text-white">
-            <h1 className="text-4xl mt-6 mb-4">Search</h1>
+            <h1 className="text-4xl mt-6 mb-4">Playlist Video</h1>
 
             <div className="flex flex-col items-center w-full overflow-y-auto pb-10">
                 {data.items.map((p) => (
-                    <div
-                        key={p.id}
+                    <a
+                        href={'/video/' + p.id.videoId}
+                        key={p.id.videoId}
                         className="w-1/2 max-w-3xl bg-neutral-700 rounded-2xl p-3 m-3 flex items-start gap-3"
                     >
                         <img
@@ -27,7 +28,7 @@ export default function SearchPage() {
                                 {p.snippet.description}
                             </p>
                         </div>
-                    </div>
+                    </a>
                 ))}
             </div>
         </div>

@@ -9,7 +9,8 @@ export default function Home() {
 
       <div className="flex flex-col items-center w-full overflow-y-auto pb-10">
         {data.items.map((p) => (
-          <div
+          <a
+            href={'/playlists/' + p.id}
             key={p.id}
             className="w-1/2 max-w-3xl bg-neutral-700 rounded-2xl p-3 m-3 flex items-start gap-3"
           >
@@ -29,7 +30,7 @@ export default function Home() {
                 {p.snippet.description}
               </p>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>

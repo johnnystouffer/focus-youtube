@@ -1,4 +1,24 @@
+"use client";
+
+import React, { useState } from "react";
+import Link from "next/link";
+
 export default function Home() {
+
+  const [input, changeInput] = useState("");
+  const router = useRouter();
+
+  const handleInputChange = (e) => {
+    changeInput(e.target.value);
+  }
+
+  const handleSubmit = (e) => {
+  e.preventDefault();
+  if (input.trim() !== "") {
+    router.push(`/search/${input}`);
+  }
+};
+
   return (
     <div className="w-screen h-screen flex items-center justify-center flex-col">
       <div className="flex m-3 p-3">
@@ -11,8 +31,11 @@ export default function Home() {
       </div>
 
       <div className="mt-6 w-full flex justify-center">
-        <form className="w-full max-w-2xl px-4 flex gap-2">
+        <form onSubmit={handleSubmit} className="w-full max-w-2xl px-4 flex gap-2">
           <input
+            value={input}
+            onChange={handleInputChange}
+            type="text"
             className="bg-neutral-700 text-white pl-4 pr-4 py-3 rounded-full w-full text-lg outline-none focus:ring-2 focus:ring-red-800"
             placeholder="Search for a video..."
           />
