@@ -25,12 +25,13 @@ export async function GET(request) {
     url.searchParams.set("type", type);
     if (channel) { url.searchParams.set("channelId", channel); }
     url.searchParams.set("maxResults", "10");
-    url.searchParams.set("key", process.env.YOUTUBE_API_KEY);
+    url.searchParams.set("key", process.env.API_KEY);
 
     try {
         const response = await fetch(url.toString());
         
         if (!response.ok) {
+            console.log(response);
             throw new Error('Network response was not ok');
         }
 

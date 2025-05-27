@@ -1,20 +1,21 @@
 export default async function SearchPage({ params }) {
 
-    const { id } = React.use(params);
+    const { searchId } = await params;
 
     const res = await fetch(
-        `http://localhost:3000/api/search?text=${encodeURIComponent(id)}&type=video`,
+        `http://localhost:3000/api/search?text=${encodeURIComponent(searchId)}&type=video`,
         { cache: "no-store" }
     );
 
-    const data = await res.json();
+    const videos = await res.json();
+    console.log(videos);
 
     return (
         <div className="w-screen h-screen flex flex-col items-center justify-start text-white">
-            <h1 className="text-4xl mt-6 mb-4">Search Results for "{id}"</h1>
+            <h1 className="text-4xl mt-6 mb-4">Search Results for "{searchId}"</h1>
 
             <div className="flex flex-col items-center w-full overflow-y-auto pb-10">
-                {data.items?.map((p) => (
+                {videos.items?.map((p) => (
                     <a
                         href={`/video/${p.id.videoId}`}
                         key={p.id.videoId}
