@@ -1,4 +1,4 @@
-export default async function SearchPage({ params }) {
+export default async function SearchPage({ params, }) {
 
     const { searchId } = await params;
 
