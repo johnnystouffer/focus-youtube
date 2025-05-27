@@ -2,20 +2,14 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { useSession, signIn, signOut } from "next-auth/react";
-import GoogleProvider from "next-auth/providers/google";
-
-
 
 export default function Home() {
-
   const [input, changeInput] = useState("");
   const router = useRouter();
 
   const handleInputChange = (e) => {
     changeInput(e.target.value);
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,7 +36,7 @@ export default function Home() {
             onChange={handleInputChange}
             type="text"
             className="bg-neutral-700 text-white pl-4 pr-4 py-3 rounded-full w-full text-lg outline-none focus:ring-2 focus:ring-red-800"
-            placeholder="Search for a video..."
+            placeholder="Search for something..."
           />
           <button
             type="submit"
@@ -52,13 +46,28 @@ export default function Home() {
           </button>
         </form>
       </div>
-      <div className="mt-10  w-full flex justify-center">
-        <button className="bg-neutral-600 stron text-white px-4 py-2 rounded-2xl cursor-pointer 
-  hover:bg-neutral-500 active:bg-neutral-700 transition-colors duration-150 mr-3.5"> Sign In </button>
-        <Link href={`/playlists/`} className="bg-neutral-600 stron text-white px-4 py-2 rounded-2xl cursor-pointer 
-  hover:bg-neutral-500 active:bg-neutral-700 transition-colors duration-150 mr-3.5"> Show Playlists </Link>
-          <button className="bg-neutral-600 stron text-white px-4 py-2 rounded-2xl cursor-pointer 
-  hover:bg-neutral-500 active:bg-neutral-700 transition-colors duration-150 mr-3.5"> Show Subscribed Channels </button>
+
+      <div className="mt-10 flex flex-wrap justify-center gap-4">
+        <button
+          onClick={() => router.push(`/search-playlists/${input}`)}
+          className="bg-neutral-600 text-white px-4 py-2 rounded-2xl hover:bg-neutral-500 active:bg-neutral-700 transition"
+        >
+          Search Playlists
+        </button>
+
+        <button
+          onClick={() => router.push(`/playlist/${input}`)}
+          className="bg-neutral-600 text-white px-4 py-2 rounded-2xl hover:bg-neutral-500 active:bg-neutral-700 transition"
+        >
+          Search Playlist ID
+        </button>
+
+        <button
+          onClick={() => router.push(`/video/${input}`)}
+          className="bg-neutral-600 text-white px-4 py-2 rounded-2xl hover:bg-neutral-500 active:bg-neutral-700 transition"
+        >
+          Search Video ID
+        </button>
       </div>
     </div>
   );

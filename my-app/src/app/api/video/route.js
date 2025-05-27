@@ -12,7 +12,7 @@ export async function GET(request) {
     const url = new URL("https://www.googleapis.com/youtube/v3/videos");
     url.searchParams.set("part", "snippet,contentDetails,statistics");
     url.searchParams.set("id", videoId);
-    url.searchParams.set("key", process.env.YOUTUBE_API_KEY);
+    url.searchParams.set("key", process.env.API_KEY);
 
     try {
         const response = await fetch(url.toString());
@@ -24,6 +24,8 @@ export async function GET(request) {
         }
 
         const data = await response.json();
+
+        console.log("Video Data:", data);
 
         return new Response(JSON.stringify(data), {
             status: 200,
