@@ -56,7 +56,7 @@ export default function Home() {
         </button>
 
         <button
-          onClick={() => { if (input.trim() !== 0) {router.push(`/playlist/${input}`)}}}
+          onClick={() => { if (input.trim() !== 0) {router.push(`/playlists/${input}`)}}}
           className="bg-neutral-600 text-white px-4 py-2 rounded-2xl hover:bg-neutral-500 active:bg-neutral-700 transition"
         >
           Search Playlist ID

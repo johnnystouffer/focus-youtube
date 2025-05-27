@@ -16,7 +16,7 @@ export default async function SearchPage({ params }) {
       <div className="flex flex-col items-center w-full overflow-y-auto pb-10">
         {playlists.items?.map((p) => (
           <a
-            href={`/playlist/${p.id.playlistId}`}
+            href={`/playlists/${p.id.playlistId}`}
             key={p.id.playlistId}
             className="w-1/2 max-w-3xl bg-neutral-700 rounded-2xl p-3 m-3 flex items-start gap-3"
           >
