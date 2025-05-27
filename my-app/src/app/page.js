@@ -1,7 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
+import GoogleProvider from "next-auth/providers/google";
+
+
 
 export default function Home() {
 
@@ -13,11 +18,11 @@ export default function Home() {
   }
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  if (input.trim() !== "") {
-    router.push(`/search/${input}`);
-  }
-};
+    e.preventDefault();
+    if (input.trim() !== "") {
+      router.push(`/search/${input}`);
+    }
+  };
 
   return (
     <div className="w-screen h-screen flex items-center justify-center flex-col">
@@ -50,11 +55,10 @@ export default function Home() {
       <div className="mt-10  w-full flex justify-center">
         <button className="bg-neutral-600 stron text-white px-4 py-2 rounded-2xl cursor-pointer 
   hover:bg-neutral-500 active:bg-neutral-700 transition-colors duration-150 mr-3.5"> Sign In </button>
-        <button className="bg-neutral-600 stron text-white px-4 py-2 rounded-2xl cursor-pointer 
-  hover:bg-neutral-500 active:bg-neutral-700 transition-colors duration-150 mr-3.5"> Show Playlists </button>
+        <Link href={`/playlists/`} className="bg-neutral-600 stron text-white px-4 py-2 rounded-2xl cursor-pointer 
+  hover:bg-neutral-500 active:bg-neutral-700 transition-colors duration-150 mr-3.5"> Show Playlists </Link>
           <button className="bg-neutral-600 stron text-white px-4 py-2 rounded-2xl cursor-pointer 
   hover:bg-neutral-500 active:bg-neutral-700 transition-colors duration-150 mr-3.5"> Show Subscribed Channels </button>
-
       </div>
     </div>
   );
