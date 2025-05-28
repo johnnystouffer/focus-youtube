@@ -49,21 +49,21 @@ export default function Home() {
 
       <div className="mt-10 flex flex-wrap justify-center gap-4">
         <button
-          onClick={() => {if (input.trim() !== 0) {router.push(`/playlist-search/${input}`)}}}
+          onClick={() => {if (input.trim() !== "") {router.push(`/playlist-search/${input}`)}}}
           className="bg-neutral-600 text-white px-4 py-2 rounded-2xl hover:bg-neutral-500 active:bg-neutral-700 transition"
         >
           Search Playlists
         </button>
 
         <button
-          onClick={() => { if (input.trim() !== 0) {router.push(`/playlists/${input}`)}}}
+          onClick={() => { if (input.trim() !== "") {router.push(`/playlists/${input}`)}}}
           className="bg-neutral-600 text-white px-4 py-2 rounded-2xl hover:bg-neutral-500 active:bg-neutral-700 transition"
         >
           Search Playlist ID
         </button>
 
         <button
-          onClick={() => { if (input.trim() !== 0) { router.push(`/video/${input}`); }}}
+          onClick={() => { if (input.trim() !== "") { router.push(`/video/${input}`); }}}
           className="bg-neutral-600 text-white px-4 py-2 rounded-2xl hover:bg-neutral-500 active:bg-neutral-700 transition"
         >
           Search Video ID

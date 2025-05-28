@@ -1,6 +1,11 @@
+import HomeButton from "@/components/HomeButton";
+
 export default async function SearchPage({ params }) {
     
     const { playlistId } = await params;
+
+    let videoList = [];
+    let index = 0;
 
     const res = await fetch(
         `http://localhost:3000/api/playlist?playlistId=${encodeURIComponent(playlistId)}`,
@@ -8,16 +13,24 @@ export default async function SearchPage({ params }) {
     );
 
     const videos = await res.json();
+    const encodedList = Buffer.from(JSON.stringify(videos.items.map(v => v.snippet.resourceId.videoId))).toString('base64');
 
 
     return (
+        <>
+        <HomeButton/>
         <div className="w-screen h-screen flex flex-col items-center justify-start text-white">
             <h1 className="text-4xl mt-6 mb-4">Playlist Videos</h1>
 
             <div className="flex flex-col items-center w-full overflow-y-auto pb-10">
-            {videos.items?.map((p) => (
+            {videos.items?.map((p) => {
+
+                videoList.push([p.snippet.resourceId.videoId, index]);
+                ++index;
+
+                return (
                 <a
-                href={`/video/${p.snippet.resourceId.videoId}`}
+                href={`/video/${p.snippet.resourceId.videoId}?playlist=${encodedList}&playlistIndex=${index}`}
                 key={p.snippet.resourceId.videoId}
                 className="w-1/2 max-w-3xl bg-neutral-700 rounded-2xl p-3 m-3 flex items-start gap-3 max-h-1/5"
                 >
@@ -38,8 +51,9 @@ export default async function SearchPage({ params }) {
                     </p>
                 </div>
                 </a>
-            ))}
+            );
+            })}
             </div>
-        </div>
+        </div></>
     );
 }

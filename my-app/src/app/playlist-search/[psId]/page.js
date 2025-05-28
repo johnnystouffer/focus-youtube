@@ -1,5 +1,7 @@
+import HomeButton from "@/components/HomeButton";
+
 export default async function SearchPage({ params }) {
-  const { psId } = params;
+  const { psId } = await params;
 
   const res = await fetch(
     `http://localhost:3000/api/search?text=${encodeURIComponent(psId)}&type=playlist`,
@@ -10,7 +12,9 @@ export default async function SearchPage({ params }) {
   console.log(playlists);
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-start text-white">
+    <>
+      <HomeButton/>
+      <div className="w-screen h-screen flex flex-col items-center justify-start text-white">
       <h1 className="text-4xl mt-6 mb-4">Playlists matching "{psId}"</h1>
 
       <div className="flex flex-col items-center w-full overflow-y-auto pb-10">
@@ -42,5 +46,6 @@ export default async function SearchPage({ params }) {
         ))}
       </div>
     </div>
+</>
   );
 }

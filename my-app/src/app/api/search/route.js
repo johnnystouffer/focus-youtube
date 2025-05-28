@@ -20,11 +20,15 @@ export async function GET(request) {
     }
 
     const url = new URL("https://www.googleapis.com/youtube/v3/search");
+    console.log(type)
     url.searchParams.set("part", "snippet");
     url.searchParams.set("q", text);
     url.searchParams.set("type", type);
     if (channel) { url.searchParams.set("channelId", channel); }
-    url.searchParams.set("maxResults", "10");
+    url.searchParams.set("maxResults", "20");
+    if (type === "video") {
+        url.searchParams.set("videoDuration", "medium");
+    }
     url.searchParams.set("key", process.env.API_KEY);
 
     try {

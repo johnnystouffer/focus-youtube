@@ -1,3 +1,5 @@
+import HomeButton from "@/components/HomeButton";
+
 export default async function SearchPage({ params, }) {
 
     const { searchId } = await params;
@@ -8,15 +10,19 @@ export default async function SearchPage({ params, }) {
     );
 
     const videos = await res.json();
-    console.log(videos);
 
-    return (
+    return ( <>
+        <HomeButton />
         <div className="w-screen h-screen flex flex-col items-center justify-start text-white">
             <h1 className="text-4xl mt-6 mb-4">Search Results for "{searchId}"</h1>
 
             <div className="flex flex-col items-center w-full overflow-y-auto pb-10">
-                {videos.items?.map((p) => (
-                    <a
+                {videos.items?.map((p) => {
+                     
+                    if (p.id.kind !== "youtube#video") {
+                        return null; // Skip non-video items
+                    }
+                    return (<a
                         href={`/video/${p.id.videoId}`}
                         key={p.id.videoId}
                         className="w-1/2 max-w-3xl bg-neutral-700 rounded-2xl p-3 m-3 flex items-start gap-3"
@@ -36,9 +42,11 @@ export default async function SearchPage({ params, }) {
                                 {p.snippet.description}
                             </p>
                         </div>
-                    </a>
-                ))}
+                    </a>)
+                })}
             </div>
         </div>
+        </>
+        
     );
 }
