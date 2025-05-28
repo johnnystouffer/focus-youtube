@@ -13,6 +13,16 @@ export default async function SearchPage({ params }) {
     );
 
     const videos = await res.json();
+    if (!videos.items || videos.items.length === 0) {
+        return (
+            <>
+            <HomeButton/>
+            <div className="w-screen h-screen flex flex-col items-center justify-start text-white">
+                <h1 className="text-4xl mt-6 mb-4">No videos found in this playlist</h1>
+            </div>
+            </>
+        );
+    }
     const encodedList = Buffer.from(JSON.stringify(videos.items.map(v => v.snippet.resourceId.videoId))).toString('base64');
 
 
