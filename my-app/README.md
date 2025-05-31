@@ -557,12 +557,12 @@ export default function SearchPage() {
 {: .nolineno }
 {: .blur }
 
-### Video Page
+#### Video Page
 
 ```js
 export default function Content() {
   return (
-    <div className="h-screen w-screen flex items-center justify-center bg-black">
+    <div className="h-lvh w-lvw flex flex-col items-center justify-start text-white">
       <iframe
         width="960"
         height="540"
@@ -769,12 +769,43 @@ For a One simple reason, these pages loading before everything is ready is fine,
 
 ### Challenge Task
 
-**Now make these components client side components, when doing this you will run into a couple errors, they will provide you documentation.** 
+**Now make these components client side components, when doing this you will run into a couple errors, attempt to Google or look at the documentartion for why you get these errors** 
 
-I will provide the answer for this one since
-however I will not provide an answer for the one below this.
+I will provide the answer for this one, if you get stuck feel free to take a look, or when you finish take a look to make sure you are in the right direction.
 
-**Since our main page (```app/page.js```) is meant to route us to other pages and is a CSR, use ```useRouter()``` to navigate the buttons to its corresponding pages.
+```js
+"use client";
+import { useParams } from "next/navigation";
+
+export default function Content() {
+
+  // since this is NOT a server side component we CANNOT use await
+  // luckily NextJS provides a useParams hook to get the params from the URL
+  // this is a client side component this is our equivalent to the server side 
+  // of 'await params'
+  const { id } = useParams();
+
+  
+  return (
+    <div className="h-lvh w-lvw flex flex-col items-center justify-start text-white">
+        <iframe
+          width="960"
+          height="540"
+          // we can add the id directly to the src
+          src={`https://www.youtube.com/embed/${id}`}
+          title="YouTube video player"
+          frameBorder="0"
+          allowFullScreen
+          className="rounded-lg shadow-lg"
+        >
+        </iframe>
+    </div>
+  );
+}
+```
+
+**Since our main page (```app/page.js```) is meant to route us to other pages and is a CSR, use ```useRouter()``` to navigate the buttons to its corresponding pages.**
+
 
 ## Loading State
 
