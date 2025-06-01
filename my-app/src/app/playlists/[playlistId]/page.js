@@ -13,6 +13,7 @@ export default async function SearchPage({ params }) {
     );
 
     const videos = await res.json();
+    
     if (!videos.items || videos.items.length === 0) {
         return (
             <>
