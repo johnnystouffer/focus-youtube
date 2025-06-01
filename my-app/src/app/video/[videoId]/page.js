@@ -41,9 +41,8 @@ export default function Content() {
 
   if (!video) return <div className="text-white p-10">Video not found</div>;
 
-  const { snippet } = video;
-  const title = snippet?.title ?? "No title";
-  const description = snippet?.description ?? "No description";
+  const title = video?.snippet?.title ?? "No title";
+  const description = video?.snippet?.description ?? "No description";
 
   return (
     <>

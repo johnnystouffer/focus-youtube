@@ -11,6 +11,8 @@ export default async function SearchPage({ params, }) {
 
     const videos = await res.json();
 
+    console.log(videos);
+
     return ( <>
         <HomeButton />
         <div className="w-screen h-screen flex flex-col items-center justify-start text-white">

@@ -67,6 +67,8 @@ npm run dev
 
 This will start up your app and you will can visit it at [here at localhost:3000](http://localhost:3000/)
 
+**NOTE:** When you update your project / save files, this will automatically update for you. There is no need to keep terminating and restarting the program. 
+
 Now you are ready to start tutorial!
 
 Take a look at your file tree, it should look something like this:
@@ -773,8 +775,11 @@ For a One simple reason, these pages loading before everything is ready is fine,
 
 I will provide the answer for this one, if you get stuck feel free to take a look, or when you finish take a look to make sure you are in the right direction.
 
+I won't provide the ```app/page.js``` since that will not throw any errors when making it it a Client Side Component.
+
 ```js
 "use client";
+
 import { useParams } from "next/navigation";
 
 export default function Content() {
@@ -802,23 +807,704 @@ export default function Content() {
     </div>
   );
 }
+
 ```
+{: file="app/video/page.js" }
+{: .nolineno }
+{: .blur }
+
+
+
 
 **Since our main page (```app/page.js```) is meant to route us to other pages and is a CSR, use ```useRouter()``` to navigate the buttons to its corresponding pages.**
+
+**(remember to take a look at the example above)**
 
 
 ## Loading State
 
+When you have Service Side Components, the entire webpage renders **on the server**, the main problem with this is, *what if the content is not ready? what do we show the user?*
 
+NextJS has a very simple and easy way to solve this issue, you can make a **static loading page**
+
+- If you have a SSR Component, in the **same folder** make a ```loading.js``` file
+- This ```loading.js``` file needs to be **static** so they can be ready right when someone loads the page.
+
+This implementation is super simple, this is what your file tree should look like. 
+
+```
+my-app/
+├── node_modules/
+├── public/
+├── src/
+│   └── app/
+│       ├── favicon.ico
+│       ├── globals.css
+│       ├── layout.js
+│       ├── page.js
+│       ├── search/
+│       │   └── [searchId]/
+│       │       ├── page.js
+│       │       └── loading.js        
+│       ├── video/
+│       │   └── [videoId]/
+│       │       └── page.js           
+│       └── playlist/
+│           └── [playlistId]/
+│               ├── page.js
+│               └── loading.js        
+├── .gitignore
+├── eslint.config.mjs
+├── jsconfig.json
+├── next.config.mjs
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+└── README.md
+```
+
+Feel free to make your own ```loading.js```
+
+If you don't feel like it here is what mine looks like 
+
+```js
+export default function Loading() {
+    return (
+        <div className="flex w-lvw h-lvh justify-center content-center">
+            <h1>Loading...</h1>
+        </div>
+    );
+}
+```
 
 ## Introduction to APIs and getting YouTube API key
 
-## Creating API
+### What is an API?
+
+An API is an **Application Programming Interface**
+
+Which is a **set of rules that allow different software components to communicate with each other**.
+
+Today we will be working with **REST APIs** which is the most popular type of API, it communicates via HTTP methods which are GET and POST (there is also PUT and DELETE but we are not going to use those). 
+
+- GET --> When you want to get data from the source.
+- POST --> When you want to give data to the source.
+
+
+### Example 
+
+Imagine you want to build a *Pokemon Information App*, the hard way to make this app is collecting every single but of information about every single pokemon. **This is where an API could make life so much easier**. There is an API called ```PokeAPI``` where you send a request for Pokemon data, and it will send it back to you.
+
+The way this works is like this:
+- you send an HTTP request (we will go more in detail later) 
+- In that HTTP request you specify what you want, for example you want to know everything about Pikachu.
+- The other end of the API will process this request, gather the information about Pikachu and put it in a **JSON File** for you to understand
+- Lastly they will send back that information that you requested, and now you have all the information you needed without collecting any data!
+
+#### Here is realistically what it would look like:
+
+send a request like this ```const apiData = await fetch(https://pokeapi.co/api/v2/pokemon/pikachu)```
+
+You will get something back that looks like this
+
+```js
+// Note: This is an example, not what PokeAPI will actually send
+{
+  "name": "pikachu",
+  "height": 4,
+  "weight": 60,
+  "types": [
+    { "type": { "name": "electric" } }
+  ]
+}
+```
+
+After you get this information back, you can parse it and use it however you would like.
+
+[Here is another example](https://www.youtube.com/watch?v=s7wmiS2mSXY&t=33s) if you are struggling a bit to understand
+
+## Enable the YouTube API
+
+Like I said before, we are going to use the **YouTube API**, luckily for us, it is free to use! So no need to put any card in or anything.
+
+So first thing we need to do is **Activate your Youtube API** and get your **API Key**
+
+Go to [Google Cloud Console](https://console.cloud.google.com/)
+
+- If you have not made a project before, [follow this tutorial](https://youtu.be/dTT1RGW8eYw?feature=shared&t=17) to get one set up,
+- Next, on the home page go to the **Navigation hamburger menu at the top left**. 
+- Click on ```APIs & Services``` which is the 4th under **Products** if you are stuck go [here](https://console.cloud.google.com/apis/library)
+- On the left you will see a tab for ```Library```, click that
+- In the search box, search for **"youtube data api v3"**, click on the result, then click **Enable**
+- After doing this you will be taken to the dashboard, in this dashboard in the middle left of the screen you will see three tabs
+  - **Metrics, Quota & System Limits, and Credentials**
+- Click on **Credentials**, next on the right side of the screen click ```+ Create Credentials``` and click ```API Key```
+- Lastly follow any prompts (there should be none) then copy the **API Key** and put it somewhere safe for now **DO NOT PUT THIS ANYWHERE PUBLIC ON THE INTERNET**
+
+**Congratulations!** You now have an API key for the Youtube API! 
+
+The reason why we need to get an API Key is basically to verify and authorize that we are allowed to call it. Most if not all APIs you will work with will need one. 
+
+Next go back to your project, and in the highest directory (the directory that holds src, and .gitignore) **create a file and call it ```.env```** 
+
+In the ```.env``` file, paste your API Key like this
+
+```console
+API_KEY=yourapikeyhere
+```
+
+Lastly make sure you have a ```.gitignore``` file, and in it add it if it is not already in there. This way the API key will not be posted to your Github repository if you want to put it there
+
+- NOTE: Even if youi are not putting this on github, put it in the .env file, it is good practice to do so as you do not want any of your frontend to show your API key
+
+## Creating your API
+
+Now it is time to make your **NextJS API**
+
+Making the API is about as easy as making the routes! in the ```/app``` folder, make a folder titled ```api```
+
+We need three different endpoints (An API endpoint is a URL that acts as the point of contact between an API client and an API server):
+
+- ```app/api/playlist```
+- ```app/api/search```
+- ```app/api/video```
+
+To create this endpoints, you need add a ```route.js``` in each folder. **This is what your tree structure should look like now**
+
+```
+my-app/
+├── node_modules/
+├── public/
+├── src/
+│   └── app/
+│       ├── favicon.ico
+│       ├── globals.css
+│       ├── layout.js
+│       ├── page.js
+│       ├── search/
+│       │   └── [searchId]/
+│       │       ├── page.js
+│       │       └── loading.js
+│       ├── video/
+│       │   └── [videoId]/
+│       │       └── page.js
+│       ├── playlist/
+│       │   └── [playlistId]/
+│       │       ├── page.js
+│       │       └── loading.js
+│       └── api/
+│           ├── playlist/
+│           │   └── route.js
+│           ├── search/
+│           │   └── route.js
+│           └── video/
+│               └── route.js
+├── .gitignore
+├── eslint.config.mjs
+├── jsconfig.json
+├── next.config.mjs
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+└── README.md
+```
+
+### Creating the API endpoints
+
+We need to create our **GET** request for each route, as a reminder:
+
+- A GET request is when you want to access data
+
+NOTE: We will not POST, only GET, since we do not have a place to put data.
+
+In every ```route.js``` put this here
+
+```js
+export async function GET(request) {
+  // content goes here
+}
+```
+
+You will notice that is has the parameter ```request```. That is where we find the details of the API request.
+
+So for example when we call this API, this is what our request will look like
+
+- ```/api/video?videoId=randomVideoId```
+
+As you will see there is this part ```?videoId=randomVideoId```
+
+When you create an API request, this is how you will format it, after the question mark, put any parameters that the API accepts along with the input for it. 
+
+So for the one above, this API has the ```videoId``` parameter, and the input for it, comes after the equal sign.
+
+Knowing this we can add to the ```api/video/route.js```
+
+```js
+export async function GET(request) {
+  // Create a URL object from the incoming request
+  const { searchParams } = new URL(request.url);
+  // Extract the value of the "videoId" from the URL
+  const videoId = searchParams.get("videoId");
+
+  // make this example data for each endpoint for
+  // now, this will be used to test the API
+  const data = {'message':'Success'}
+
+  // right now we do not have anything to really send back
+  // but when we do, we send a response
+  // a Response has a status (200 if successful) and a
+  // a JSON object with the data
+  return new Response(JSON.stringify(data), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
+
+```
+{: file="app/video/page.js" }
+{: .nolineno }
+
+Now that you know how to create an endpoint, create the `route.js` for `/search` and `/playlist` given these two requests:
+
+- ```http://localhost:3000/api/search?text=lofi&type=video```
+- `http://localhost:3000/api/playlist?playlistId=myplaylistid`
+
+
+HINT FOR `/search`, the & means there are MULTIPLE PARAMETERS, those being `text` and  `type`
+
+### Test Your APIs 
+
+In this part of your route
+
+```js
+const data = {'message' : 'Success'}
+```
+
+It is there for a reason, go to each route, type them into the URL of your browser that you are using. And you should see this message (or whatever message you put) at the top left of the page.
+
+If you do, congratulations you have correctly made your first API! Otherwise go back and make sure everything looks the same.
 
 ## Calling YouTube API and Parsing the Data
 
+Now that we made our own API, we are going to now call the youtube API with our requests.
+
+**Why did we make our own API to call the YouTube API?**
+
+1. Adding another layer basically gives a backend, that adds a layer of abstraction, security, validation that we probably do not want on our frontend.
+2. It is better to learn to make your own API and backend, rather than just calling them.
+
+### How to call the Youtube API
+
+The url for the API is `https://www.googleapis.com/youtube/v3`
+
+Everything you need to know about the YouTube API is [here in the documentation](https://developers.google.com/youtube/v3/docs)
+
+I won't just give the documentation and call it good though, so I will give you an example by showing the `/video` one first
+
+When making API there is no need to **manually type the URL** we have tools to make it easier and guarantee to be correct
+
+```js
+  // we create a new URL object, and put the base URL we want to call
+  const url = new URL("https://www.googleapis.com/youtube/v3/videos");
+
+  // Next for the API parameters
+  // instead of straight the parameters into the URL, we can
+  // just set them using our URL object
+  url.searchParams.set("part", "snippet,contentDetails,statistics");
+  url.searchParams.set("id", videoId);
+
+  // Remember the API key we added to our env file?
+  // Well javascript lets us call it using process.env.API_KEY
+  // ANYTIME WE CALL THE API WE NEED THE API KEY FOR AUTHORIZATION
+  url.searchParams.set("key", process.env.API_KEY);
+```
+
+Feel free to add this to your `/app/api/video/route.js`
+
+However APIs will not always work, sometimes when you call an API it may return a unsuccessful code, like **500**. So when calling the API, we need to make sure we account for those.
+
+Thankfully we can use a `try and catch` statement. 
+
+Here is the full `/app/api/video/route.js`
+
+```js
+export async function GET(request) {
+    // get the parameters from the request
+    const { searchParams } = new URL(request.url);
+    const videoId = searchParams.get("videoId");
+
+    // Build the url to call the API
+    const url = new URL("https://www.googleapis.com/youtube/v3/videos");
+    url.searchParams.set("part", "snippet,contentDetails,statistics");
+    url.searchParams.set("id", videoId);
+    url.searchParams.set("key", process.env.API_KEY);
+
+    // make the attempt to call the API
+    try {
+        const response = fetch(url.toString());
+
+        // we can check if it went okay, if now we want to raise
+        // an error to show the API access was unsuccessful
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("YouTube API Error:", errorText);
+            throw new Error("Failed to fetch video details");
+        }
+
+        // If it is fine, that means we can take the JSON
+        // string and convert to a JSON Object so we can parse
+        // the data
+        const data = response.json();
+
+        // since this was successful, we return a Response
+        // with the status 200, and a json string of the data
+        return new Response(JSON.stringify(data), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    } catch (error) {
+        // If the API ends up not working, return why it did not
+        // work, and make the status 500
+        return new Response(JSON.stringify({ error: error.message }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+}
+```
+
+**THERE WILL BE A COUPLE ERRORS IN THIS FILE**
+
+Use the console and NextJS helper to figure out these errors.
+
+There may be a couple things you need to add for security that I did not do here
+
+
+### Challenge Task
+
+Now it is your turn! use the [YouTube API Documentation](https://developers.google.com/youtube/v3/docs) and any other resources **(TRY TO AVOID USING AI THOUGH)** to make the API calls for `/api/search` and `/api/playlist`
+
+Everything you need to do this has already been talked about. I will provide the solution, with a couple errors for `/api/search` without any edge case checking, but not for `/api/playlist` (It is very similar to the video one)
+
+### Partial Solution to Challenge Task
+
+```js
+export function GET(request) {
+    const { searchParams } = new URL(request.url);
+    
+    const text = searchParams.get('text');
+    const channel = searchParams.get('channel');
+    const type = searchParams.get('type');
+
+    const url = new URL("https://www.googleapis.com/youtube/v3/search");
+
+    url.searchParams.set("part", "snippet");
+    url.searchParams.set("q", text);
+    url.searchParams.set("type", type);
+    
+    if (type === "video") {
+        url.searchParams.set("videoDuration", "medium");
+    }
+
+    const response = await fetch(url.toString());
+    
+    if (!response.ok) {
+        console.log(response);
+        throw new Error('Network response was not ok');
+    }
+
+    const data = response.json();
+
+    return new Response(JSON.stringify(data), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+    });
+}
+```
+{: file="app/api/search/route.js" }
+{: .nolineno }
+{: .blur }
+
 ## Calling Custom API to the front end to display the Data
 
-## Challenge Task:
+Now that we actually have data to put in our website, we can now display the everything.
+
+first, we call the API in `/app/search`
+
+```js
+  // encodeURIComponent is necessary since the searchId may contain
+  // weird non unicode characters, this will fix that.
+  const res = await fetch(
+      `http://localhost:3000/api/search?text=${encodeURIComponent(searchId)}&type=video`,
+      { cache: "no-store" } // this is optional
+                            // included so there is always
+                            // new / fresh data
+  );
+```
+
+Just like how we called the YouTube API, we can call our own API, when we receieve the data, this is now the response to a search, and we can display it.
+
+### How to Display API Data
+
+**Try this on your own, figure out what the API Data looks like, and how you can display it. I will give a full solution to this one, and a partial solution to another. The last one you will need to do on your own.
+
+Here is what an example 2 video search would look like
+
+```json
+{
+  "kind": "youtube#searchListResponse",
+  "etag": "dummyEtag123",
+  "regionCode": "US",
+  "pageInfo": {
+    "totalResults": 2,
+    "resultsPerPage": 2
+  },
+  "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "etag1",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "dQw4w9WgXcQ"
+      },
+      "snippet": {
+        "publishedAt": "2023-01-01T00:00:00Z",
+        "channelId": "UC123456789",
+        "title": "Relaxing Lofi Beats",
+        "description": "Perfect background music for studying and relaxing.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg"
+          }
+        },
+        "channelTitle": "Lofi Radio",
+        "liveBroadcastContent": "none"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "etag2",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "hY7m5jjJ9mM"
+      },
+      "snippet": {
+        "publishedAt": "2023-01-02T00:00:00Z",
+        "channelId": "UC987654321",
+        "title": "Chillhop Essentials - Winter 2023",
+        "description": "A selection of jazzy beats to relax or code to.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/hY7m5jjJ9mM/default.jpg"
+          }
+        },
+        "channelTitle": "Chillhop Music",
+        "liveBroadcastContent": "none"
+      }
+    }
+  ]
+}
+```
+
+**If the above JSON is unreadable and confusing to you, do not worry, paste any JSON object into [this website](https://jsoncrack.com/editor), it will help you visualize the data better**
+
+Now knowing with the API data may look like, you can use this to get to the data you need, for example:
+
+- **Thumbnail** = `items[i].snippet.thumbnails.medium.url`
+- **Title** = `items[i].snippet.title`
+- **Description** = `items[i].snippet.description`
+- **Video ID** = `items[i].id.videoId`
+
+**NOTE:** I expect you to know how to get info from JSON objects, if not, don't worry here is a [quick demonstration](https://www.youtube.com/watch?v=iiADhChRriM)
+
+What we need to do to show all the videos is **iterate through all the videos in the items array and for each video display a video card**
+
+This is easily done in JS with JavaScript's map function
+
+```js
+const videos = await res.json();
+
+return (<div className="flex flex-col items-center w-full overflow-y-auto pb-10">
+  {videos.items?.map((vid) => { // go through every video in the items
+
+      return (<a    // cant use useRouter() since this is SSR
+          href={`/video/${vid.id.videoId}`} 
+      >
+          <img
+              src={vid.snippet.thumbnails.medium.url}
+              alt={vid.snippet.title}
+              width={160}
+              height={120}
+          />
+          <div>
+              <h2>
+                  {vid.snippet.title} 
+              </h2>
+              <p>
+                  {vid.snippet.description}
+              </p>
+          </div>
+      </a>);
+    });
+  } 
+</div>);
+```
+
+Your full `/video/page.js` should look like this
+
+```js
+"use client";
+
+import { useParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+
+
+export default function Content() {
+
+  const { videoId } = useParams(); 
+
+  // since this will be rendered later, since embed is an API
+  // we can use useState() to set the video
+  const [video, setVideo] = useState(null);  
+
+  // fetch the video and set it to the video variable
+  // if there is one
+  // review useEffect and useState if this seems confusing
+  useEffect(() => {
+    const fetchVideo = async () => {
+      const res = await fetch(`/api/video?videoId=${encodeURIComponent(videoId)}`, { cache: "force-cache" });
+      const vid = await res.json();
+      setVideo(vid?.items?.[0] ?? null);
+    };
+
+    fetchVideo();
+  }, [videoId]);
+
+  // get the snippet from the video to extract
+  const title = video?.snippet?.title ?? "No title";
+  const description = video?.snippet?.description ?? "No description";
+
+  // now display all the information
+  return (
+    <>
+      <div className="h-lvh w-lvw flex flex-col items-center justify-start text-white">
+        <h1 className="text-3xl p-2 m-2">{title}</h1>
+        <iframe
+          width="960"
+          height="540"
+          src={`https://www.youtube.com/embed/${videoId}`}
+          title={title}
+          frameBorder="0"
+          allowFullScreen
+        ></iframe>
+        <div className="flex items-center justify-between max-h-1/4 w-full max-w-5xl p-4 mt-4 bg-neutral-700 rounded-lg overflow-scroll">
+          <p className="mt-4 text-gray-300">{description}</p>
+        </div>
+      </div>
+    </>
+  );
+}
+```
+{: file="app/video/[videoId]/page.js" }
+{: .nolineno }
+{: .blur }
+
+
+Now that you have seen what this looks like, give an attempt at making the playlist one.
+
+- Call your playlist API to retreieve the playlist
+- go through the items (videos) in your playliust and display them as cards
+- each card should link to `/video/[videoId]/page.js` of that video
+
+I will provide a half solution where there are errors for you to fix, but given the demonstrations above you have more than enough to do this. 
+
+**Solution (with errors)**
+
+```js
+export default function PlaylistPage({ params }) {
+    
+    const { playlistId } =  params;
+
+    const res = fetch(
+        `http://localhost:3000/api/playlist?playlistId=playlistId`,
+        { cache: 'no-store' }
+    );
+
+    const videos = res.json();
+
+    return (
+        <>
+        <div className="w-screen h-screen flex flex-col items-center justify-start text-white">
+            <h1 className="text-4xl mt-6 mb-4">Playlist Videos</h1>
+
+            <div className="flex flex-col items-center w-full overflow-y-auto pb-10">
+            {video.items.map((p) => {
+
+                return (
+                <a
+                href={`/video/${p.snippet.resourceId.videoId}`}
+                key={p.snippet.resourceId.videoId}
+                className="w-1/2 max-w-3xl bg-neutral-700 rounded-2xl p-3 m-3 flex items-start gap-3 max-h-1/5"
+                >
+                <img
+                    src={p.snippet.thumbnails.medium?.url}
+                    alt={p.snippet.title}
+                    width={160}
+                    height={120}
+                    className="rounded-md shrink-0 object-fill"
+                    style={{ width: '160px', height: '120px' }}
+                />
+                <div className="flex flex-col justify-start h-full p-3">
+                    <h2 className="text-lg font-semibold leading-tight mb-1">
+                    {p.snippet.title}
+                    </h2>
+                    <p className="text-sm text-gray-300 leading-snug max-h-3/4 overflow-scroll">
+                    {p.snippet.description}
+                    </p>
+                </div>
+                </a>
+            );
+            })}
+            </div>
+        </div></>
+    );
+}
+```
+{: file="app/playlist/[playlistId]/page.js" }
+{: .nolineno }
+{: .blur }
+
+## Final Challenge Task
+
+Lastly, we need our `/search/[searchId]/page.js` done.
+
+- Call your playlist API to retreieve the playlist
+- go through the items (videos) in the search and display them as cards
+- be aware of edge cases, find a way to not show shorts, or any channels that may show up (yes even if you specify videos they sometimes show ip)
+- each card should link to `/video/[videoId]/page.js` of that video
+
+Your solution will be very similar to the playlist page. Utilize anything in this tutorial and google + documentation to help you.
 
 ## Where to go from here?
+
+### Congrats!
+
+You have finished the main part of thistutorial!
+
+As you can see there is a ton more to do, but I am ending it here because everything else is going to be repetitive, and you have everything you need.
+
+I wanted to leave you with a list of things you can do to improve your website.
+- utilize the button we did not program yet (search for playlist)
+ - you can edit search to do accomodate playlists, or you can make a seperate playlist search (second would be easier, first is more ideal in OOD)
+- make a way to go through playlist videos
+- Make a channel page
+- Make a channel search page
+- Show comments
+- Show related videos
+- An ambitious one could be to connect to your youtube account / use OAuth to view your own private content and playlists.
+- Even just making the design better
+
+Overall do whatever you want to make this your own to where you think you would want to use it. If you thought of a different way to improve the website, do it! If you want to do something you did not see in this tutorial, don't be afraid to do it, use your resources and make it happen!
+
+Thank you so much, and I hope you guys enjoyed and learned something new in this tutorial!
+
