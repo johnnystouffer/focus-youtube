@@ -1,7 +1,7 @@
 ---
 title: FocusTube
 author: Johnny
-date: 2025-5-27 12:00:00 +0800
+date: 2025-6-1 12:00:00 +0800
 categories: [JavaScript, FocusTube]
 tags: [JavaScript, Medium]
 description: In this project you will learn the fundamentals of NextJS and APIs in order to make a youtube clone/wrapper that removes the distracting algorithms that hook you in.
@@ -1489,7 +1489,7 @@ Your solution will be very similar to the playlist page. Utilize anything in thi
 
 ### Congrats!
 
-You have finished the main part of thistutorial!
+You have finished the main part of this tutorial!
 
 As you can see there is a ton more to do, but I am ending it here because everything else is going to be repetitive, and you have everything you need.
 
