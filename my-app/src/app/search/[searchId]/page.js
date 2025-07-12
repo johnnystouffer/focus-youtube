@@ -1,4 +1,5 @@
 import HomeButton from "@/components/HomeButton";
+import { decodeText } from "@/utils/util";
 
 export default async function SearchPage({ params, }) {
 
@@ -31,17 +32,17 @@ export default async function SearchPage({ params, }) {
                     >
                         <img
                             src={p.snippet.thumbnails.medium.url}
-                            alt={p.snippet.title}
+                            alt={decodeText(p.snippet.title)}
                             width={160}
                             height={120}
                             className="rounded-md shrink-0 object-fill"
                         />
                         <div className="flex flex-col justify-start h-full p-3">
                             <h2 className="text-lg font-semibold leading-tight mb-1">
-                                {p.snippet.title}
+                                {decodeText(p.snippet.title)}
                             </h2>
                             <p className="text-sm text-gray-300 leading-snug">
-                                {p.snippet.description}
+                                {decodeText(p.snippet.description)}
                             </p>
                         </div>
                     </a>)
