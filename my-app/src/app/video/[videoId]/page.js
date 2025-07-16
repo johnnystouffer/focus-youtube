@@ -6,14 +6,12 @@ import HomeButton from "@/components/HomeButton";
 import PrevButton from "@/components/PrevButton";
 import NextButton from "@/components/NextButton";
 
-
 export default function Content() {
   const { videoId } = useParams(); 
   const searchParams = useSearchParams();
 
   const index = parseInt(searchParams.get("playlistIndex"), 10);
   const encoded = searchParams.get("playlist");
-  console.log(typeof encoded);
 
   const playlist = useMemo(() => {
     try {
@@ -38,7 +36,6 @@ export default function Content() {
   }, [videoId]);
 
   if (loading) return <div className="text-white p-10">Loading...</div>;
-
   if (!video) return <div className="text-white p-10">Video not found</div>;
 
   const title = video?.snippet?.title ?? "No title";
@@ -47,24 +44,29 @@ export default function Content() {
   return (
     <>
       <HomeButton />
-      <div className="h-lvh w-lvw flex flex-col items-center justify-start text-white">
-        <h1 className="text-3xl p-2 m-2">{title}</h1>
-        <iframe
-          width="960"
-          height="540"
-          src={`https://www.youtube.com/embed/${videoId}`}
-          title={title}
-          frameBorder="0"
-          allowFullScreen
-        ></iframe>
+      <div className="min-h-screen w-full flex flex-col items-center justify-start text-white px-4 pb-10">
+        <h1 className="text-3xl p-2 m-2 text-center max-w-5xl">{title}</h1>
+
+        {/* Responsive iframe */}
+        <div className="w-full max-w-5xl aspect-video mt-4 rounded-xl overflow-hidden shadow-lg">
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}`}
+            title={title}
+            frameBorder="0"
+            allowFullScreen
+            className="w-full h-full"
+          ></iframe>
+        </div>
+
         {Array.isArray(playlist) && playlist.length > 0 && !isNaN(index) && (
-          <div className="flex items-center justify-between w-full max-w-5xl p-4 mt-4 bg-neutral-700 rounded-lg">
+          <div className="flex items-center justify-between w-full max-w-5xl px-6 py-4 mt-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg">
             <PrevButton playlist={playlist} index={index} encoded={encoded} />
             <NextButton playlist={playlist} index={index} encoded={encoded} />
           </div>
         )}
-        <div className="flex items-center justify-between max-h-1/4 w-full max-w-5xl p-4 mt-4 bg-neutral-700 rounded-lg overflow-scroll">
-          <p className="mt-4 text-gray-300">{description}</p>
+
+        <div className="w-full max-w-5xl mt-4 px-6 py-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg whitespace-pre-wrap">
+          {description}
         </div>
       </div>
     </>

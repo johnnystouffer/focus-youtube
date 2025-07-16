@@ -1,15 +1,15 @@
 "use client";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 export default function HomeButton() {
-    const router = useRouter();
+  const router = useRouter();
 
-    return (
-        <div
-            className="text-xl bg-red-800 rounded-2xl hover:bg-red-700 active:bg-red-900 transition-colors duration-150 cursor-pointer p-2 m-4 ml-8 mb-0 w-fit"
-            onClick={() => router.push('/')}
-        >
-            Home
-        </div>
-    );
+  return (
+    <div
+      className="px-4 py-2 rounded-2xl bg-amber-700/10 backdrop-blur-md text-white hover:bg-white/10 border border-white transition-all hover:scale-105 duration-150 shadow-lg cursor-pointer m-4 ml-8 mb-0 w-fit text-lg"
+      onClick={() => router.push("/")}
+    >
+      Home
+    </div>
+  );
 }
