@@ -4,9 +4,10 @@ export async function GET(request) {
     const text = searchParams.get('text');
     const channel = searchParams.get('channel');
     const type = searchParams.get('type');
+    const nextPageToken = searchParams.get('nextPageToken');
     
     if (!type || !text) {
-        return new Response(JSON.stringify({ error: 'Missing text or channel parameter' }), {
+        return new Response(JSON.stringify({ error: 'Missing text or type parameter' }), {
             status: 400,
             headers: { 'Content-Type': 'application/json' }
         });
@@ -20,22 +21,25 @@ export async function GET(request) {
     }
 
     const url = new URL("https://www.googleapis.com/youtube/v3/search");
-    console.log(type)
     url.searchParams.set("part", "snippet");
     url.searchParams.set("q", text);
     url.searchParams.set("type", type);
-    if (channel) { url.searchParams.set("channelId", channel); }
+    if (channel) {
+        url.searchParams.set("channelId", channel);
+    }
     url.searchParams.set("maxResults", "20");
     if (type === "video") {
         url.searchParams.set("videoDuration", "medium");
+    }
+    if (nextPageToken) {
+        url.searchParams.set("pageToken", nextPageToken);
     }
     url.searchParams.set("key", process.env.API_KEY);
 
     try {
         const response = await fetch(url.toString());
-        
+
         if (!response.ok) {
-            console.log(response);
             throw new Error('Network response was not ok');
         }
 

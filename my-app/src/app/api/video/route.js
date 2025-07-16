@@ -25,8 +25,6 @@ export async function GET(request) {
 
         const data = await response.json();
 
-        console.log("Video Data:", data);
-
         return new Response(JSON.stringify(data), {
             status: 200,
             headers: { 'Content-Type': 'application/json' }

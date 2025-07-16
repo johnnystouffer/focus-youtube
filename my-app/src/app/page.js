@@ -36,7 +36,6 @@ export default function Home() {
         </h1>
       </div>
 
-      {/* Search Bar */}
       <div className="mt-6 w-full flex justify-center">
         <form onSubmit={handleSubmit} className="w-full max-w-2xl px-4 flex gap-2">
           <input
@@ -55,7 +54,6 @@ export default function Home() {
         </form>
       </div>
 
-      {/* Option Buttons */}
       <div className="mt-10 flex flex-wrap justify-center gap-4">
         {[
           { label: "Search Playlists", route: "playlist-search" },

@@ -1240,7 +1240,6 @@ export function GET(request) {
    const response = await fetch(url.toString());
   
    if (!response.ok) {
-       console.log(response);
        throw new Error('Network response was not ok');
    }
 
