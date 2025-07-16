@@ -1,7 +1,5 @@
-export default function Loading() {
-    return (
-        <div className="flex w-lvw h-lvh justify-center content-center">
-            <h1>Loading...</h1>
-        </div>
-    );
+import Loading from "@/components/Loading";
+
+export default function Load() {
+  return <Loading/>
 }

@@ -13,39 +13,42 @@ export default async function SearchPage({ params }) {
 
   return (
     <>
-      <HomeButton/>
-      <div className="w-screen h-screen flex flex-col items-center justify-start text-white">
-      <h1 className="text-4xl mt-6 mb-4">Playlists matching "{psId}"</h1>
+      <div className="flex flex-col w-screen h-screen text-white">
+        {/* Header */}
+        <div className="shrink-0">
+          <HomeButton />
+          <h1 className="text-4xl text-center mt-4 mb-2">Playlists matching "{psId}"</h1>
+        </div>
 
-      <div className="flex flex-col items-center w-full overflow-y-auto pb-10">
-        {playlists.items?.map((p) => (
-          <a
-            href={`/playlists/${p.id.playlistId}`}
-            key={p.id.playlistId}
-            className="w-1/2 max-w-3xl bg-neutral-700 rounded-2xl p-3 m-3 flex items-start gap-3"
-          >
-            <img
-              src={p.snippet.thumbnails.medium.url}
-              alt={p.snippet.title}
-              width={160}
-              height={120}
-              className="rounded-md shrink-0 object-fill"
-            />
-            <div className="flex flex-col justify-start h-full p-3">
-              <h2 className="text-lg font-semibold leading-tight mb-1">
-                {p.snippet.title}
-              </h2>
-              <p className="text-sm text-gray-300 leading-snug">
-                {p.snippet.description}
-              </p>
-              <p className="text-sm text-gray-400 mt-1 italic">
-                By {p.snippet.channelTitle}
-              </p>
-            </div>
-          </a>
-        ))}
+        {/* Scrollable card container */}
+        <div className="flex-1 overflow-y-auto flex flex-col items-center px-4 pb-10">
+          {playlists.items?.map((p) => (
+            <a
+              href={`/playlists/${p.id.playlistId}`}
+              key={p.id.playlistId}
+              className="w-full max-w-3xl h-[180px] bg-amber-700/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg flex items-start gap-4 p-4 m-2 hover:bg-white/10 transition hover:scale-[1.01] hover:shadow-2xl"
+            >
+              <img
+                src={p.snippet.thumbnails.medium.url}
+                alt={p.snippet.title}
+                className="w-[200px] h-full object-cover rounded-xl shrink-0"
+              />
+              <div className="flex flex-col justify-between h-full overflow-hidden">
+                <h2 className="text-lg font-semibold text-white leading-tight mb-1 line-clamp-2">
+                  {p.snippet.title}
+                </h2>
+                <p className="text-sm text-white/80 leading-snug line-clamp-2">
+                  {p.snippet.description}
+                </p>
+                <p className="text-xs text-white/60 italic mt-1">
+                  By {p.snippet.channelTitle}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
-    </div>
-</>
+    </>
+
   );
 }

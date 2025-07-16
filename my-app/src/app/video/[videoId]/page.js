@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import HomeButton from "@/components/HomeButton";
 import PrevButton from "@/components/PrevButton";
 import NextButton from "@/components/NextButton";
+import Loading from "@/components/Loading";
 
 export default function Content() {
   const { videoId } = useParams(); 
@@ -35,7 +36,7 @@ export default function Content() {
     fetchVideo();
   }, [videoId]);
 
-  if (loading) return <div className="text-white p-10">Loading...</div>;
+  if (loading) return <Loading/>;
   if (!video) return <div className="text-white p-10">Video not found</div>;
 
   const title = video?.snippet?.title ?? "No title";
@@ -65,9 +66,9 @@ export default function Content() {
           </div>
         )}
 
-        <div className="w-full max-w-5xl mt-4 px-6 py-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg whitespace-pre-wrap">
+        {description.length > 0 && (<div className="w-full max-w-5xl mt-4 px-6 py-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg whitespace-pre-wrap">
           {description}
-        </div>
+        </div>)}
       </div>
     </>
   );
