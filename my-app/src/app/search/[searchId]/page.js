@@ -3,20 +3,25 @@ import { decodeText } from "@/utils/util";
 
 export default async function SearchPage({ params }) {
   const { searchId } = await params;
+  
+  const searchText = decodeURIComponent(searchId);
+  console.log(searchText);
 
   const res = await fetch(
-    `http://localhost:3000/api/search?text=${encodeURIComponent(searchId)}&type=video`,
+    `http://localhost:3000/api/search?text=${searchText}&type=video`,
     { cache: "no-store" }
   );
 
   const videos = await res.json();
 
+
   return (
     <>
       <div className="flex flex-col w-screen h-screen">
+        {/* Header */}
         <div className="shrink-0">
           <HomeButton />
-          <h1 className="text-4xl text-center mt-4 mb-2">Search Results for "{searchId}"</h1>
+          <h1 className="text-4xl text-center mt-4 mb-2">Search Results for "{searchText.replace('+', ' ')}"</h1>
         </div>
 
         <div className="flex-1 overflow-y-auto flex flex-col items-center pb-10 px-4">
