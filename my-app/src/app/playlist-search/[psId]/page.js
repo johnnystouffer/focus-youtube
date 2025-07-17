@@ -18,7 +18,7 @@ export default async function PlaylistSearchPage({ params }) {
       <div className="flex flex-col w-screen h-screen text-white">
         <div className="shrink-0">
           <HomeButton />
-          <h1 className="text-4xl text-center mt-4 mb-2">Search Results for "{psText.replace('+', ' ')}"</h1>
+          <h1 className="text-4xl text-center mt-4 mb-2">Search Results for: {psText.replace('+', ' ')}</h1>
         </div>
         <PlaylistView initialPlaylists={initialPlaylists} psId={psId} />
       </div>

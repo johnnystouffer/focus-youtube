@@ -17,7 +17,7 @@ export default async function SearchPage({ params }) {
       <div className="shrink-0">
         <HomeButton />
         <h1 className="text-4xl text-center mt-4 mb-2">
-          Search Results for "{searchText.replace("+", " ")}"
+          Search Results for: {searchText.replace("+", " ")}
         </h1>
       </div>
 
