@@ -2,7 +2,7 @@ import HomeButton from "@/components/HomeButton";
 import VideoSearchResults from "@/app/search/components/SearchResults";
 
 export default async function SearchPage({ params }) {
-  const { searchId } = params;
+  const { searchId } = await params;
   const searchText = decodeURIComponent(searchId);
 
   const res = await fetch(

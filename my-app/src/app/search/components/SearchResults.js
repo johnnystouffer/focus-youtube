@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { decodeText } from "@/utils/util";
 
 export default function VideoSearchResults({ initialVideos, searchText }) {
@@ -31,7 +31,6 @@ export default function VideoSearchResults({ initialVideos, searchText }) {
     setLoading(false);
   };
 
-  // Final deduplication before rendering (double-safety)
   const renderedVideos = [];
   const seenIds = new Set();
 
