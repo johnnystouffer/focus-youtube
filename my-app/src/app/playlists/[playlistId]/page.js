@@ -4,7 +4,7 @@ export default async function PlaylistPage({ params }) {
   const { playlistId } = await params;
 
   const res = await fetch(
-    `/api/playlist?playlistId=${encodeURIComponent(playlistId)}`,
+    `${process.env.SITE_URL}/api/playlist?playlistId=${encodeURIComponent(playlistId)}`,
     { cache: "no-store" }
   );
 
@@ -37,7 +37,7 @@ export default async function PlaylistPage({ params }) {
           {videos.items?.map((p, index) => {
             return (
               <a
-                href={`/video/${p.snippet.resourceId.videoId}?playlist=${encodedList}&playlistIndex=${index}`}
+                href={`${process.env.SITE_URL}/video/${p.snippet.resourceId.videoId}?playlist=${encodedList}&playlistIndex=${index}`}
                 key={p.snippet.resourceId.videoId}
                 className="w-full max-w-3xl h-[180px] bg-amber-700/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg flex items-start gap-4 p-4 m-2 hover:bg-white/10 transition hover:scale-[1.01] hover:shadow-2xl"
               >

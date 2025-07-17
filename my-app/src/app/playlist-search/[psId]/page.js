@@ -7,7 +7,7 @@ export default async function PlaylistSearchPage({ params }) {
   const psText = decodeURIComponent(psId);
 
   const res = await fetch(
-    `/api/search?text=${psId}&type=playlist`,
+    `${process.env.SITE_URL}/api/search?text=${psId}&type=playlist`,
     { cache: "no-store" }
   );
 
