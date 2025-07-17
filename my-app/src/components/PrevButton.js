@@ -4,7 +4,7 @@ export default function PrevButton({playlist, index, encoded}) {
     const prevVideoId = playlist[index - 1];
 
     return (
-        <a href={`${process.env.SITE_URL}/video/${prevVideoId}?playlist=${encoded}&playlistIndex=${index - 1}`} className="text-blue-300 hover:underline">
+        <a href={`/video/${prevVideoId}?playlist=${encoded}&playlistIndex=${index - 1}`} className="text-blue-300 hover:underline">
         ← Previous Video
         </a>
     );
