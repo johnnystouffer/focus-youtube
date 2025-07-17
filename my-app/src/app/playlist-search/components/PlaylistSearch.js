@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react";
+import { decodeText } from "@/utils/util";
 
 export default function PlaylistView({ initialPlaylists, psId }) {
 
@@ -55,13 +56,13 @@ export default function PlaylistView({ initialPlaylists, psId }) {
                 />
                 <div className="flex flex-col justify-between h-full overflow-hidden">
                     <h2 className="text-lg font-semibold text-white leading-tight mb-2 line-clamp-2">
-                    {p.snippet.title}
+                    {decodeText(p.snippet.title)}
                     </h2>
                     <p className="text-sm text-white/80 leading-snug line-clamp-2 whitespace-pre-wrap">
-                    {p.snippet.description}
+                    {decodeText(p.snippet.description)}
                     </p>
                     <p className="text-xs text-white/60 italic mt-1">
-                    By {p.snippet.channelTitle}
+                    By {decodeText(p.snippet.channelTitle)}
                     </p>
                 </div>
                 </a>
