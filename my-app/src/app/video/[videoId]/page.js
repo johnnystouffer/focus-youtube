@@ -25,6 +25,7 @@ export default function Content() {
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Fetch video metadata
   useEffect(() => {
     const fetchVideo = async () => {
       const res = await fetch(`/api/video?videoId=${encodeURIComponent(videoId)}`, { cache: "force-cache" });
@@ -36,7 +37,35 @@ export default function Content() {
     fetchVideo();
   }, [videoId]);
 
-  if (loading) return <Loading/>;
+  // YouTube Player: Only auto-advance when video ends, no autoplay
+  useEffect(() => {
+    const setupYouTubePlayer = () => {
+      new window.YT.Player("yt-player", {
+        events: {
+          onStateChange: (event) => {
+            if (event.data === window.YT.PlayerState.ENDED) {
+              const nextIndex = index + 1;
+              if (Array.isArray(playlist) && nextIndex < playlist.length) {
+                const nextVideoId = playlist[nextIndex];
+                window.location.href = `/video/${nextVideoId}?playlist=${encoded}&playlistIndex=${nextIndex}`;
+              }
+            }
+          },
+        },
+      });
+    };
+
+    if (window.YT && window.YT.Player) {
+      setupYouTubePlayer();
+    } else {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+      window.onYouTubeIframeAPIReady = setupYouTubePlayer;
+    }
+  }, [videoId, playlist, index, encoded]);
+
+  if (loading) return <Loading />;
   if (!video) return <div className="text-white p-10">Video not found</div>;
 
   const title = video?.snippet?.title ?? "No title";
@@ -51,24 +80,32 @@ export default function Content() {
         {/* Responsive iframe */}
         <div className="w-full max-w-5xl aspect-video mt-4 rounded-xl overflow-hidden shadow-lg">
           <iframe
-            src={`https://www.youtube.com/embed/${videoId}`}
+            id="yt-player"
+            src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1`}
             title={title}
             frameBorder="0"
+            allow="autoplay; encrypted-media"
             allowFullScreen
             className="w-full h-full"
-          ></iframe>
+          />
         </div>
 
         {Array.isArray(playlist) && playlist.length > 0 && !isNaN(index) && (
           <div className="flex items-center justify-between w-full max-w-5xl px-6 py-4 mt-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg">
-            <PrevButton playlist={playlist} index={index} encoded={encoded} />
-            <NextButton playlist={playlist} index={index} encoded={encoded} />
+            <div className="flex-1">
+              <PrevButton playlist={playlist} index={index} encoded={encoded} />
+            </div>
+            <div className="flex-1 text-right">
+              <NextButton playlist={playlist} index={index} encoded={encoded} />
+            </div>
           </div>
         )}
 
-        {description.length > 0 && (<div className="w-full max-w-5xl mt-4 px-6 py-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg whitespace-pre-wrap">
-          {description}
-        </div>)}
+        {description.length > 0 && (
+          <div className="w-full max-w-5xl mt-4 px-6 py-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg whitespace-pre-wrap">
+            {description}
+          </div>
+        )}
       </div>
     </>
   );

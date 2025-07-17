@@ -4,7 +4,7 @@ export default function NextButton({playlist, index, encoded}) {
     const nextVideoId = playlist[index + 1];
 
     return (
-        <a href={`/video/${nextVideoId}?playlist=${encoded}&playlistIndex=${index + 1}`} className="text-blue-500 hover:underline">
+        <a href={`/video/${nextVideoId}?playlist=${encoded}&playlistIndex=${index + 1}`} className="text-blue-300 hover:underline">
         Next Video →
         </a>
     );
