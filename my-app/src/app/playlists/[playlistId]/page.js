@@ -4,7 +4,7 @@ export default async function PlaylistPage({ params }) {
   const { playlistId } = await params;
 
   const res = await fetch(
-    `http://localhost:3000/api/playlist?playlistId=${encodeURIComponent(playlistId)}`,
+    `/api/playlist?playlistId=${encodeURIComponent(playlistId)}`,
     { cache: "no-store" }
   );
 

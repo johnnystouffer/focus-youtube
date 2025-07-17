@@ -6,7 +6,7 @@ export default async function SearchPage({ params }) {
   const searchText = decodeURIComponent(searchId);
 
   const res = await fetch(
-    `http://localhost:3000/api/search?text=${searchText}&type=video`,
+    `/api/search?text=${searchText}&type=video`,
     { cache: "no-store" }
   );
 
