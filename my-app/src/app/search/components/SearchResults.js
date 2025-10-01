@@ -4,6 +4,7 @@ import { useState } from "react";
 import { decodeText } from "@/utils/util";
 
 export default function VideoSearchResults({ initialVideos, searchText }) {
+  
   const [videos, setVideos] = useState(initialVideos.items || []);
   const [nextPageToken, setNextPageToken] = useState(initialVideos.nextPageToken);
   const [loading, setLoading] = useState(false);

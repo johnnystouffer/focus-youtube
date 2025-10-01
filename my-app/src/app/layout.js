@@ -1,8 +1,9 @@
+import TopBar from "./components/topbar";
 import "./globals.css";
 
 export const metadata = {
   title: "FocusTube",
-  description: "An app to let you focus ",
+  description: "An app to encourage intentional watching",
 };
 
 export default function RootLayout({ children }) {
@@ -17,10 +18,11 @@ export default function RootLayout({ children }) {
           loop
           playsInline
         />
-        <div className="fixed top-0 left-0 w-full h-full bg-indigo-950/40 z-[-1]" />
-        <main className="relative z-10">
-          {children}
-        </main>
+        <div className="fixed top-0 left-0 w-full h-full bg-indigo-950/40 z-[-1]. " />
+          <main className="relative z-10">
+            <TopBar/>
+            {children}
+          </main>
       </body>
     </html>
   );

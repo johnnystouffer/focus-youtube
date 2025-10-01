@@ -37,7 +37,6 @@ export default function Content() {
     fetchVideo();
   }, [videoId]);
 
-  // YouTube Player: Only auto-advance when video ends, no autoplay
   useEffect(() => {
     const setupYouTubePlayer = () => {
       new window.YT.Player("yt-player", {
