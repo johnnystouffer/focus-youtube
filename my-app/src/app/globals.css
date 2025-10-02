@@ -27,7 +27,6 @@
 }
 
 
-/* Custom global variables */
 :root {
   --background: #ffffff;
   --foreground: #000000;
@@ -40,7 +39,6 @@
   }
 }
 
-/* Tailwind-safe global styles */
 @layer base {
   body {
     background-color: var(--background);

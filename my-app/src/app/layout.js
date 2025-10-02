@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
           playsInline
         />
         <div className="fixed top-0 left-0 w-full h-full bg-indigo-950/40 z-[-1]. " />
-          <main className="relative z-10">
+          <main className="absolute z-10 mt-0">
             <TopBar/>
             {children}
           </main>

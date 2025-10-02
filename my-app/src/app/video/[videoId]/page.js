@@ -25,7 +25,6 @@ export default function Content() {
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch video metadata
   useEffect(() => {
     const fetchVideo = async () => {
       const res = await fetch(`/api/video?videoId=${encodeURIComponent(videoId)}`, { cache: "force-cache" });
@@ -73,10 +72,9 @@ export default function Content() {
   return (
     <>
       <HomeButton />
-      <div className="min-h-screen w-full flex flex-col items-center justify-start text-white px-4 pb-10">
+      <div className="min-h-screen w-screen flex flex-col items-center justify-start text-white px-4 pb-10">
         <h1 className="text-3xl p-2 m-2 text-center max-w-5xl">{title}</h1>
 
-        {/* Responsive iframe */}
         <div className="w-full max-w-5xl aspect-video mt-4 rounded-xl overflow-hidden shadow-lg">
           <iframe
             id="yt-player"
