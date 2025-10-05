@@ -24,13 +24,20 @@ export default function Content() {
 
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showDesc, setShowDesc] = useState(false);
+
+  const [likes, setLikes] = useState(0);
+  const [views, setViews] = useState(0);
 
   useEffect(() => {
     const fetchVideo = async () => {
       setLoading(true);
       const res = await fetch(`/api/video?videoId=${encodeURIComponent(videoId)}`, { cache: "force-cache" });
       const vid = await res.json();
+      console.log(vid);
       setVideo(vid?.items?.[0] ?? null);
+      setLikes(Number(vid?.items?.[0]?.statistics?.likeCount));
+      setViews(Number(vid?.items?.[0]?.statistics?.viewCount));
       setLoading(false);
     };
 
@@ -70,6 +77,7 @@ export default function Content() {
   const title = video?.snippet?.title ?? "No title";
   const description = video?.snippet?.description ?? "No description";
   const enableDesc = localStorage.getItem("desc") === null ? true : localStorage.getItem("desc") === 'Enabled';
+  const enableLikes = localStorage.getItem("likes") === null ? true : localStorage.getItem("likes") === 'Enabled';
 
   return (
     <>
@@ -100,11 +108,27 @@ export default function Content() {
           </div>
         )}
 
-        {description.length > 0 && enableDesc && (
-          <div className="w-full max-w-5xl mt-4 px-6 py-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg whitespace-pre-wrap">
-            {description}
+        {enableLikes && (<div className="flex items-center justify-between w-full max-w-5xl px-6 py-4 mt-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg">
+          <div className="flex-1">
+            <p>Views: {views.toLocaleString('en-US')}</p>
           </div>
-        )}
+          <div className="flex-1 text-right">
+            <p>Likes: {likes.toLocaleString('en-US')}</p>
+          </div>
+        </div>)}
+
+        {description.length > 0 && enableDesc && (
+          <div className="w-full max-w-5xl mt-4 px-6 py-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg whitespace-pre-wrap transition-all duration-300 ease-in-out">
+            {showDesc && (
+              <div>
+                {description}
+                <p className="cursor-pointer mt-4 text-blue-200" onClick={() => setShowDesc((prev) => !prev)}>Hide Description...</p>
+              </div>
+            )}
+            {!showDesc && (
+              <p className="cursor-pointer text-blue-200" onClick={() => setShowDesc((prev) => !prev)}>Show Description...</p>
+            )}
+          </div>)}
       </div>
     </>
   );

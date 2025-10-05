@@ -55,16 +55,16 @@ export default function Settings() {
     useEffect(() => {
         const savedFont = localStorage.getItem("font") || "font-spacemono";
         const savedComments = localStorage.getItem("comments") || "Disabled";
-        const savedDesc = localStorage.getItem("desc") || true;
-        const savedLikes = localStorage.getItem("likes") || true;
+        const savedDesc = localStorage.getItem("desc") || "Enabled";
+        const savedLikes = localStorage.getItem("likes") || "Enabled";
 
         Object.values(FontClassMap).forEach((cls) => document.body.classList.remove(cls));
         document.body.classList.add(savedFont);
 
         selectFont(savedFont);
         setComments(savedComments === "Enabled");
-        setDesc(savedDesc);
-        setLikes(savedLikes);
+        setDesc(savedDesc === "Enabled");
+        setLikes(savedLikes === "Enabled");
     }, []);
 
     const newFont = (val) => {
