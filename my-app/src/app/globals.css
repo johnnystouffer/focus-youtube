@@ -1,48 +1,17 @@
+@import "../../public/assets/font.css";
 @import "tailwindcss";
 @import "line-awesome/dist/line-awesome/css/line-awesome.min.css";
 
-@font-face {
-  font-family: "Space Mono";
-  font-weight: 400;
-  src: url('/assets/fonts/SpaceMono-Regular.ttf') format("truetype");
-}
-
-@font-face {
-  font-family: "Space Mono";
-  font-style: italic;
-  src: url('/assets/fonts/SpaceMono-Italic.ttf') format("truetype");
-}
-
-@font-face {
-  font-family: "Space Mono";
-  font-weight: 800;
-  src: url('/assets/fonts/SpaceMono-Bold.ttf') format("truetype");
-}
-
-@font-face {
-  font-family: "Space Mono";
-  font-weight: 800;
-  font-style: italic;
-  src: url('/assets/fonts/SpaceMono-BoldItalic.ttf') format("truetype");
-}
-
-
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #2e2e2e;
-    --foreground: #ededed;
-  }
+  --background: #000000;
+  --foreground: #ffffff;
+  --app-font: "Space Mono", Arial, Helvetica, sans-serif;
 }
 
 @layer base {
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: "Space Mono", Arial, Helvetica, sans-serif;
+    font-family: var(--app-font);
   }
 }
