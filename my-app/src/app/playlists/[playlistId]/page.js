@@ -14,7 +14,7 @@ export default async function PlaylistPage({ params }) {
     return (
       <>
         <HomeButton />
-        <div className="w-screen h-screen flex flex-col items-center justify-start text-white">
+        <div className="w-screen h-screen flex flex-col items-center justify-start">
           <h1 className="text-4xl mt-6 mb-4">No videos found in this playlist</h1>
         </div>
       </>
@@ -27,7 +27,7 @@ export default async function PlaylistPage({ params }) {
 
   return (
     <>
-      <div className="flex flex-col w-screen h-screen text-white">
+      <div className="flex flex-col w-screen h-screen">
         <div className="shrink-0">
           <HomeButton />
           <h1 className="text-4xl text-center mt-4 mb-2">Playlist Videos</h1>
@@ -39,7 +39,7 @@ export default async function PlaylistPage({ params }) {
               <a
                 href={`${process.env.SITE_URL}/video/${p.snippet.resourceId.videoId}?playlist=${encodedList}&playlistIndex=${index}`}
                 key={p.snippet.resourceId.videoId}
-                className="w-full max-w-3xl h-[180px] bg-amber-700/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg flex items-start gap-4 p-4 m-2 hover:bg-white/10 transition hover:scale-[1.01] hover:shadow-2xl"
+                className="w-full max-w-3xl h-[180px] bg-amber-700/10 backdrop-blur-md border border-[--text-var]/20 rounded-2xl shadow-lg flex items-start gap-4 p-4 m-2 hover:bg-white/10 transition hover:scale-[1.01] hover:shadow-2xl"
               >
                 <img
                   src={p.snippet.thumbnails.medium?.url}
@@ -47,7 +47,7 @@ export default async function PlaylistPage({ params }) {
                   className="w-[200px] h-full object-cover rounded-xl shrink-0"
                 />
                 <div className="flex flex-col justify-between h-full overflow-hidden">
-                  <h2 className="text-lg font-semibold text-white leading-tight mb-2 line-clamp-2">
+                  <h2 className="text-lg font-semibold leading-tight mb-2 line-clamp-2">
                     {p.snippet.title}
                   </h2>
                   <p className="text-sm text-white/80 leading-snug line-clamp-3 whitespace-pre-wrap">

@@ -4,14 +4,13 @@
 
 :root {
   --background: #000000;
-  --foreground: #ffffff;
   --app-font: "Space Mono", Arial, Helvetica, sans-serif;
+  --text-var: #ffffff;
 }
 
 @layer base {
   body {
     background-color: var(--background);
-    color: var(--foreground);
     font-family: var(--app-font);
   }
 }

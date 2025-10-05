@@ -72,7 +72,7 @@ export default function Content() {
   }, [videoId, playlist, index, encoded]);
 
   if (loading) return <Loading />;
-  if (!video) return <div className="text-white p-10">Video not found</div>;
+  if (!video) return <div className="p-10">Video not found</div>;
 
   const title = video?.snippet?.title ?? "No title";
   const description = video?.snippet?.description ?? "No description";
@@ -82,7 +82,7 @@ export default function Content() {
   return (
     <>
       <HomeButton />
-      <div className="min-h-screen w-screen flex flex-col items-center justify-start text-white px-4 pb-10">
+      <div className="min-h-screen w-screen flex flex-col items-center justify-start px-4 pb-10">
         <h1 className="text-3xl p-2 m-2 text-center max-w-5xl">{title}</h1>
 
         <div className="w-full max-w-5xl aspect-video mt-4 rounded-xl overflow-hidden shadow-lg">
@@ -98,7 +98,7 @@ export default function Content() {
         </div>
 
         {Array.isArray(playlist) && playlist.length > 0 && !isNaN(index) && (
-          <div className="flex items-center justify-between w-full max-w-5xl px-6 py-4 mt-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg">
+          <div className="flex items-center justify-between w-full max-w-5xl px-6 py-4 mt-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-[--text-var]  shadow-lg">
             <div className="flex-1">
               <PrevButton playlist={playlist} index={index} encoded={encoded} />
             </div>
@@ -108,9 +108,8 @@ export default function Content() {
           </div>
         )}
 
-        {enableLikes && (<div className="flex items-center justify-between w-full max-w-5xl px-6 py-4 mt-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg">
+        {enableLikes && (<div className="flex items-center justify-between w-full max-w-5xl px-6 py-4 mt-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-[--text-var]  shadow-lg">
           <div className="flex-1">
-            <p>Views: {views.toLocaleString('en-US')}</p>
           </div>
           <div className="flex-1 text-right">
             <p>Likes: {likes.toLocaleString('en-US')}</p>
@@ -118,7 +117,7 @@ export default function Content() {
         </div>)}
 
         {description.length > 0 && enableDesc && (
-          <div className="w-full max-w-5xl mt-4 px-6 py-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg whitespace-pre-wrap transition-all duration-300 ease-in-out">
+          <div className="w-full max-w-5xl mt-4 px-6 py-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-[--text-var]  shadow-lg whitespace-pre-wrap transition-all duration-300 ease-in-out">
             {showDesc && (
               <div>
                 {description}

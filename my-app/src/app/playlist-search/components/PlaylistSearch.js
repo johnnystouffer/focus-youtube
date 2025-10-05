@@ -47,7 +47,7 @@ export default function PlaylistView({ initialPlaylists, psId }) {
                 <a
                 href={`/playlists/${p.id.playlistId}`}
                 key={p.id.playlistId}
-                className="w-full max-w-3xl h-[180px] bg-amber-700/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg flex items-start gap-4 p-4 m-2 hover:bg-white/10 transition hover:scale-[1.01] hover:shadow-2xl"
+                className="w-full max-w-3xl h-[180px] bg-amber-700/10 backdrop-blur-md border border-[--text-var]/20 rounded-2xl shadow-lg flex items-start gap-4 p-4 m-2 hover:bg-white/10 transition hover:scale-[1.01] hover:shadow-2xl"
                 >
                 <img
                     src={p.snippet.thumbnails.medium.url}
@@ -55,7 +55,7 @@ export default function PlaylistView({ initialPlaylists, psId }) {
                     className="w-[200px] h-full object-cover rounded-xl shrink-0"
                 />
                 <div className="flex flex-col justify-between h-full overflow-hidden">
-                    <h2 className="text-lg font-semibold text-white leading-tight mb-2 line-clamp-2">
+                    <h2 className="text-lg font-semibold leading-tight mb-2 line-clamp-2">
                     {decodeText(p.snippet.title)}
                     </h2>
                     <p className="text-sm text-white/80 leading-snug line-clamp-2 whitespace-pre-wrap">

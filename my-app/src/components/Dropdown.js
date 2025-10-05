@@ -5,7 +5,7 @@ export default function Dropdown({ options, onSelect, val }) {
     const optionLength = typeof options[0] === 'object' ? 2 : 1;
 
     return (
-        <select className="backdrop-blur-md w-full border-1 border-white p-1.5 rounded-xl hover:bg-white/10 transition ease-in-out " 
+        <select className="backdrop-blur-md w-full border-1 border-[--text-var] p-1.5 rounded-xl hover:bg-white/10 transition ease-in-out " 
                 value={val} 
                 onChange={(e) => onSelect(e.target.value)}>
             {optionLength === 2 && options.map((v) => (
