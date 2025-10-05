@@ -27,6 +27,7 @@ export default function Content() {
 
   useEffect(() => {
     const fetchVideo = async () => {
+      setLoading(true);
       const res = await fetch(`/api/video?videoId=${encodeURIComponent(videoId)}`, { cache: "force-cache" });
       const vid = await res.json();
       setVideo(vid?.items?.[0] ?? null);
@@ -68,6 +69,7 @@ export default function Content() {
 
   const title = video?.snippet?.title ?? "No title";
   const description = video?.snippet?.description ?? "No description";
+  const enableDesc = localStorage.getItem("desc") === null ? true : localStorage.getItem("desc") === 'Enabled';
 
   return (
     <>
@@ -98,7 +100,7 @@ export default function Content() {
           </div>
         )}
 
-        {description.length > 0 && (
+        {description.length > 0 && enableDesc && (
           <div className="w-full max-w-5xl mt-4 px-6 py-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-white text-white shadow-lg whitespace-pre-wrap">
             {description}
           </div>

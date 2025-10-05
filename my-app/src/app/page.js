@@ -47,31 +47,11 @@ export default function Home() {
           />
           <button
             type="submit"
-            className="px-4 py-2 rounded-2xl bg-amber-700/10 backdrop-blur-md text-white hover:bg-white/10 border border-white transition-all hover:scale-105 duration-150 shadow-lg"
+            className="px-4 py-2 rounded-3xl bg-amber-700/10 backdrop-blur-md text-white hover:bg-white/10 border border-white transition-all hover:scale-105 duration-150 shadow-lg"
           >
             Search
           </button>
         </form>
-      </div>
-
-      <div className="mt-10 flex flex-wrap justify-center gap-4">
-        {[
-          { label: "Search Playlists", route: "playlist-search" },
-          { label: "Search Playlist ID", route: "playlists" },
-          { label: "Search Video ID", route: "video" },
-        ].map(({ label, route }) => (
-          <button
-            key={route}
-            onClick={() => {
-              if (input.trim() !== "") {
-                router.push(`/${route}/${input.replace(" ", "+")}`);
-              }
-            }}
-            className="px-4 py-2 rounded-2xl bg-amber-700/10 backdrop-blur-md text-white hover:bg-white/10 border border-white transition-all hover:scale-105 duration-150 shadow-lg"
-          >
-            {label}
-          </button>
-        ))}
       </div>
     </div>
   );

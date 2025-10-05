@@ -1,7 +1,7 @@
 "use client"
 
 import Back from "@/components/Back";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Dropdown from "@/components/Dropdown";
 
 export const FontClassMap = {
@@ -45,23 +45,76 @@ export const FontClassMap = {
 
 export default function Settings() {
 
-    const [font, selectFont] = useState("Space Mono");
+    const defaultOptions = ["Enabled", "Disabled"];
+
+    const [font, selectFont] = useState("font-spacemono");
+    const [enableComments, setComments] = useState(false);
+    const [desc, setDesc] = useState(true);
+    const [likes, setLikes] = useState(true);
+
+    useEffect(() => {
+        const savedFont = localStorage.getItem("font") || "font-spacemono";
+        const savedComments = localStorage.getItem("comments") || "Disabled";
+        const savedDesc = localStorage.getItem("desc") || true;
+        const savedLikes = localStorage.getItem("likes") || true;
+
+        Object.values(FontClassMap).forEach((cls) => document.body.classList.remove(cls));
+        document.body.classList.add(savedFont);
+
+        selectFont(savedFont);
+        setComments(savedComments === "Enabled");
+        setDesc(savedDesc);
+        setLikes(savedLikes);
+    }, []);
 
     const newFont = (val) => {
-        document.body.classList.remove(localStorage.getItem("font"))
-        let newFont = localStorage.setItem("font", FontClassMap[val]);
-        print(newFont);
-        document.body.classList.add(newFont);
-        selectFont(newFont);
+        let olFont = localStorage.getItem("font");
+        if (olFont) {
+            document.body.classList.remove(olFont);
+        }
+        localStorage.setItem("font", val);
+        let newF = localStorage.getItem("font");
+        document.body.classList.add(newF);
+        selectFont(newF);
     }
+
+    const commentOption = (val) => {
+        localStorage.setItem("comments", val);
+        setComments(val === "Enabled" ? true : false);
+    }
+
+    const descriptionOptions = (val) => {
+        localStorage.setItem("desc", val);
+        setDesc(val === "Enabled" ? true : false);
+    }
+
+    const likeOption = (val) => {
+        localStorage.setItem("likes", val);
+        setLikes(val === "Enabled" ? true : false);
+    }
+
     
     return (
         <>
             <Back/>
             <div className="h-screen w-screen flex items-center justify-center">
-                <div className="max-w-150">
-                    <h1>Select A Font</h1>
-                    <Dropdown className="min-w-96" options={Object.entries(FontClassMap)} onSelect={newFont} originalValue={font}></Dropdown>
+                <div className="min-w-80 w-1/3">
+                    <div className="w-full mb-5">
+                        <h1 className="text-xl mb-1">Select A Font</h1>
+                        <Dropdown options={Object.entries(FontClassMap)} onSelect={newFont} val={font}></Dropdown>
+                    </div>
+                    <div className="w-full mb-5">
+                        <h1 className="text-xl mb-1">Comments</h1>
+                        <Dropdown options={defaultOptions} onSelect={commentOption} val={enableComments ? defaultOptions[0] : defaultOptions[1]}></Dropdown>
+                    </div>
+                    <div className="w-full mb-5">
+                        <h1 className="text-xl mb-1">Descriptions</h1>
+                        <Dropdown options={defaultOptions} onSelect={descriptionOptions} val={desc ? defaultOptions[0] : defaultOptions[1]}></Dropdown>
+                    </div>
+                    <div className="w-full mb-5">
+                        <h1 className="text-xl mb-1">Likes & Dislikes</h1>
+                        <Dropdown options={defaultOptions} onSelect={likeOption} val={likes ? defaultOptions[0] : defaultOptions[1]}></Dropdown>
+                    </div>
                 </div>
             </div>
         </>
