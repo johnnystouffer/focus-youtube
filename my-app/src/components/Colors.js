@@ -14,8 +14,6 @@ export default function ChooseColor({ startColor, localName, cssName }) {
     setColor(lower);
     setCustom(lower);
 
-    console.log(lower);
-
     localStorage.setItem(localName, lower);
     document.documentElement.style.setProperty(cssName, lower);
   };

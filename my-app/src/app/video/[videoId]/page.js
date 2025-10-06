@@ -34,7 +34,6 @@ export default function Content() {
       setLoading(true);
       const res = await fetch(`/api/video?videoId=${encodeURIComponent(videoId)}`, { cache: "force-cache" });
       const vid = await res.json();
-      console.log(vid);
       setVideo(vid?.items?.[0] ?? null);
       setLikes(Number(vid?.items?.[0]?.statistics?.likeCount));
       setViews(Number(vid?.items?.[0]?.statistics?.viewCount));
@@ -85,6 +84,17 @@ export default function Content() {
       <div className="min-h-screen w-screen flex flex-col items-center justify-start px-4 pb-10">
         <h1 className="text-3xl p-2 m-2 text-center max-w-5xl">{title}</h1>
 
+        {Array.isArray(playlist) && playlist.length > 0 && !isNaN(index) && (
+          <div className="flex items-center justify-between w-full max-w-5xl px-6 py-4 mt-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-[--text-var] shadow-lg">
+            <div className="flex-1">
+              <PrevButton playlist={playlist} index={index} encoded={encoded} />
+            </div>
+            <div className="flex-1 text-right">
+              <NextButton playlist={playlist} index={index} encoded={encoded} />
+            </div>
+          </div>
+        )}
+
         <div className="w-full max-w-5xl aspect-video mt-4 rounded-xl overflow-hidden shadow-lg">
           <iframe
             id="yt-player"
@@ -96,17 +106,6 @@ export default function Content() {
             className="w-full h-full"
           />
         </div>
-
-        {Array.isArray(playlist) && playlist.length > 0 && !isNaN(index) && (
-          <div className="flex items-center justify-between w-full max-w-5xl px-6 py-4 mt-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-[--text-var]  shadow-lg">
-            <div className="flex-1">
-              <PrevButton playlist={playlist} index={index} encoded={encoded} />
-            </div>
-            <div className="flex-1 text-right">
-              <NextButton playlist={playlist} index={index} encoded={encoded} />
-            </div>
-          </div>
-        )}
 
         {enableLikes && (<div className="flex items-center justify-between w-full max-w-5xl px-6 py-4 mt-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-[--text-var]  shadow-lg">
           <div className="flex-1">

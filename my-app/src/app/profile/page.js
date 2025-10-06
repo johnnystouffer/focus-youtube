@@ -1,6 +1,16 @@
 import Back from "@/components/Back";
+import NotFound from "../not-found";
 
 export default function Profile() {
+
+    const UNFINISHED = true;
+
+    if (UNFINISHED) {
+        return (
+            <NotFound />
+        );
+    }
+
     return (
         <>    
             <Back/>    
