@@ -42,12 +42,12 @@ export default function Home() {
             value={input}
             onChange={handleInputChange}
             type="text"
-            className="bg-amber-700/10 backdrop-blur-md  pl-4 pr-4 py-3 rounded-full w-full text-lg outline-none placeholder-white/70 shadow-inner ring-1 focus:ring-2 focus:white focus:scale-102 transition-all"
+            className="bg-amber-700/10 backdrop-blur-md  pl-4 pr-4 py-3 rounded-full w-full text-lg outline-none placeholder-[var(--second-var)] shadow-inner ring-1 focus:ring-2 focus:white focus:scale-102 transition-all"
             placeholder="Search for something..."
           />
           <button
             type="submit"
-            className="px-4 py-2 rounded-3xl bg-amber-700/10 backdrop-blur-md  hover:bg-white/10 border border-[--text-var] transition-all hover:scale-105 duration-150 shadow-lg"
+            className="px-4 py-2 rounded-3xl bg-amber-700/10 backdrop-blur-md  hover:bg-white/10 border border-[var(--text-var)] transition-all hover:scale-105 duration-150 shadow-lg"
           >
             Search
           </button>

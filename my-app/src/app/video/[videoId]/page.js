@@ -110,6 +110,7 @@ export default function Content() {
 
         {enableLikes && (<div className="flex items-center justify-between w-full max-w-5xl px-6 py-4 mt-4 rounded-2xl bg-amber-700/10 backdrop-blur-md border border-[--text-var]  shadow-lg">
           <div className="flex-1">
+            <p>Views: {views.toLocaleString('en-US')}</p>
           </div>
           <div className="flex-1 text-right">
             <p>Likes: {likes.toLocaleString('en-US')}</p>
@@ -121,11 +122,11 @@ export default function Content() {
             {showDesc && (
               <div>
                 {description}
-                <p className="cursor-pointer mt-4 text-blue-200" onClick={() => setShowDesc((prev) => !prev)}>Hide Description...</p>
+                <p className="cursor-pointer mt-4 text-[var(--third-var)]" onClick={() => setShowDesc((prev) => !prev)}>Hide Description...</p>
               </div>
             )}
             {!showDesc && (
-              <p className="cursor-pointer text-blue-200" onClick={() => setShowDesc((prev) => !prev)}>Show Description...</p>
+              <p className="cursor-pointer text-[var(--third-var)]" onClick={() => setShowDesc((prev) => !prev)}>Show Description...</p>
             )}
           </div>)}
       </div>

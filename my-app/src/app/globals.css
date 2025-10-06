@@ -6,6 +6,8 @@
   --background: #000000;
   --app-font: "Space Mono", Arial, Helvetica, sans-serif;
   --text-var: #ffffff;
+  --second-var: #d5d5d5;
+  --third-var: #bdbdff;
 }
 
 @layer base {

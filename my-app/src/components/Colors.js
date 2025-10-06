@@ -3,19 +3,21 @@
 import React, { useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 
-export default function ChooseColor({ onChange }) {
-  const [color, setColor] = useState("#ffffff");
-  const [custom, setCustom] = useState("");
+const HEX_RE = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
 
-  const HEX_RE = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
+export default function ChooseColor({ startColor, localName, cssName }) {
+  const [color, setColor] = useState(startColor);
+  const [custom, setCustom] = useState("");
 
   const applyColor = (hex) => {
     const lower = hex.toLowerCase();
     setColor(lower);
     setCustom(lower);
-    localStorage.setItem("color", lower);
-    document.documentElement.style.setProperty("--text-var", lower);
-    if (onChange) onChange(lower);
+
+    console.log(lower);
+
+    localStorage.setItem(localName, lower);
+    document.documentElement.style.setProperty(cssName, lower);
   };
 
   const handleChange = (col) => {
@@ -30,25 +32,23 @@ export default function ChooseColor({ onChange }) {
   };
 
   useEffect(() => {
-    const saved = localStorage.getItem("color");
+    const saved = localStorage.getItem(localName);
     const valid = saved && HEX_RE.test(saved) ? saved : "#ffffff";
     setColor(valid);
     setCustom(valid);
-    document.documentElement.style.setProperty("--text-var", valid);
+    document.documentElement.style.setProperty(cssName, valid);
   }, []);
 
   return (
     <>
       <div
         className="rounded-2xl border backdrop-blur-2xl p-3"
-        style={{ borderColor: color }}
       >
         <HexColorPicker color={color} onChange={handleChange} style={{ width: "100%" }} />
       </div>
       <div className="mt-2">
         <p>Input:</p>
         <input
-          style={{ borderColor: color }}
           className="backdrop-blur-2xl rounded-2xl border p-0.5 pl-2 w-full"
           type="text"
           value={custom}

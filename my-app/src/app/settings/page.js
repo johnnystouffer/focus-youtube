@@ -1,8 +1,8 @@
 "use client";
+
 import Back from "@/components/Back"; 
 import { useState, useEffect } from "react";
 import Dropdown from "@/components/Dropdown";
-import ChoseColor from "@/components/Colors";
 import FontClassMap from "@/components/FontClassMap";
 import Loading from "@/components/Loading";
  
@@ -14,7 +14,6 @@ export default function Settings() {
     const [enableComments, setComments] = useState(false); 
     const [desc, setDesc] = useState(true); 
     const [likes, setLikes] = useState(true); 
-    const [color, setColor] = useState("#ffffff"); 
     const [loading, setLoading] = useState(false);
     
     useEffect(() => { 
@@ -61,11 +60,6 @@ export default function Settings() {
         setLikes(val === "Enabled" ? true : false); 
     } 
     
-    const colorChosen = (val) => { 
-        localStorage.setItem("color", val); 
-        setColor(val); 
-    } 
-
     if (loading) {
         return (<Loading />);
     }
@@ -79,17 +73,23 @@ export default function Settings() {
                         <h1 className="text-xl mb-1">Change Font</h1> 
                         <Dropdown options={Object.entries(FontClassMap)} onSelect={newFont} val={font}></Dropdown> 
                     </div> 
+
                     <div className="w-full mb-6"> 
                         <h1 className="text-xl mb-1">Change Font Color</h1> 
-                        <ChoseColor onChange={colorChosen}/> </div> 
+                        <a className="text-[var(--third-var)] transform hover:scale-105 underline transition-all ease-in-out" href={'/settings/colors'}>To Font Color Page</a>
+                    </div> 
+
                     <div className="w-full mb-6"> 
                         <h1 className="text-xl mb-1">Comments</h1> 
                         <Dropdown options={defaultOptions} onSelect={commentOption} val={enableComments ? defaultOptions[0] : defaultOptions[1]}></Dropdown> 
                     </div> 
+
                     <div className="w-full mb-6"> 
                         <h1 className="text-xl mb-1">Descriptions</h1> 
                         <Dropdown options={defaultOptions} onSelect={descriptionOptions} val={desc ? defaultOptions[0] : defaultOptions[1]}></Dropdown> 
-                    </div> <div className="w-full mb-6"> 
+                    </div> 
+                    
+                    <div className="w-full mb-6"> 
                         <h1 className="text-xl mb-1">Likes & Dislikes</h1> 
                         <Dropdown options={defaultOptions} onSelect={likeOption} val={likes ? defaultOptions[0] : defaultOptions[1]}></Dropdown> 
                     </div> 

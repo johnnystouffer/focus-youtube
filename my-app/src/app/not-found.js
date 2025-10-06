@@ -3,7 +3,7 @@ export default function NotFound() {
     <div className="w-screen h-screen flex flex-col justify-center items-center text-center">
       <div className="p-8">
         <h2 className="text-6xl font-bold mb-4">404</h2>
-        <p className="text-2xl text-gray-200 mb-6">Page Not Found</p>
+        <p className="text-2xl text-[--text-var]-200 mb-6">Page Not Found</p>
         <p className="max-w-md mb-8">
           The page you’re looking for doesn’t exist or may have been moved. 
           Please check the URL or return to the home page.
