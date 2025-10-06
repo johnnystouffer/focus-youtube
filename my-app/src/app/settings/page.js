@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Dropdown from "@/components/Dropdown";
 import FontClassMap from "@/components/FontClassMap";
 import Loading from "@/components/Loading";
+import Link from "next/link";
  
  
 export default function Settings() { 
@@ -76,7 +77,7 @@ export default function Settings() {
 
                     <div className="w-full mb-6"> 
                         <h1 className="text-xl mb-1">Change Font Color</h1> 
-                        <a className="text-[var(--third-var)] transform hover:scale-105 underline transition-all ease-in-out" href={'/settings/colors'}>To Font Color Page</a>
+                        <Link className="text-[var(--third-var)] transform hover:scale-105 underline transition-all ease-in-out" href={'/settings/colors'}>To Font Color Page</Link>
                     </div> 
 
                     <div className="w-full mb-6"> 

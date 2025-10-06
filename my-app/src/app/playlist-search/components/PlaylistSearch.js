@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { decodeText } from "@/utils/util";
+import Link from "next/link";
 
 export default function PlaylistView({ initialPlaylists, psId }) {
 
@@ -44,7 +45,7 @@ export default function PlaylistView({ initialPlaylists, psId }) {
     <>
         <div className="flex-1 overflow-y-auto flex flex-col items-center px-4 pb-10">
             {approvedPlaylists.map((p) => (
-                <a
+                <Link
                 href={`/playlists/${p.id.playlistId}`}
                 key={p.id.playlistId}
                 className="w-full max-w-3xl h-[180px] bg-amber-700/10 backdrop-blur-md border border-[--text-var]/20 rounded-2xl shadow-lg flex items-start gap-4 p-4 m-2 hover:bg-white/10 transition hover:scale-[1.01] hover:shadow-2xl"
@@ -65,7 +66,7 @@ export default function PlaylistView({ initialPlaylists, psId }) {
                     By {decodeText(p.snippet.channelTitle)}
                     </p>
                 </div>
-                </a>
+                </Link>
             ))}
 
             {nextPageToken && (

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function NotFound() {
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center text-center">
@@ -8,11 +10,11 @@ export default function NotFound() {
           The page you’re looking for doesn’t exist or may have been moved. 
           Please check the URL or return to the home page.
         </p>
-        <a
+        <Link
         href="/"
         className="inline-block px-4 py-2 rounded-2xl border border-[--text-var] backdrop-blur-md transform hover:scale-105 transition duration-300 ease-in-out hover:bg-white/10">
             Go Back Home
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import HomeButton from "@/components/HomeButton";
+import Link from "next/link";
 
 export default async function PlaylistPage({ params }) {
   const { playlistId } = await params;
@@ -36,7 +37,7 @@ export default async function PlaylistPage({ params }) {
         <div className="flex-1 overflow-y-auto flex flex-col items-center px-4 pb-10">
           {videos.items?.map((p, index) => {
             return (
-              <a
+              <Link
                 href={`${process.env.SITE_URL}/video/${p.snippet.resourceId.videoId}?playlist=${encodedList}&playlistIndex=${index}`}
                 key={p.snippet.resourceId.videoId}
                 className="w-full max-w-3xl h-[180px] bg-amber-700/10 backdrop-blur-md border border-[--text-var]/20 rounded-2xl shadow-lg flex items-start gap-4 p-4 m-2 hover:bg-white/10 transition hover:scale-[1.01] hover:shadow-2xl"
@@ -54,7 +55,7 @@ export default async function PlaylistPage({ params }) {
                     {p.snippet.description}
                   </p>
                 </div>
-              </a>
+              </Link>
             );
           })}
         </div>
