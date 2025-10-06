@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 export default function NextButton({playlist, index, encoded}) {
 
