@@ -8,13 +8,14 @@ export const metadata = {
   description: "An app to encourage intentional watching",
 };
 
+
 export default function RootLayout({ children }) {
 
   return (
         <html lang="en">
           <body className="antialiased text-[var(--text-var)]">
             <ThemeInit />
-            <Background/>
+            <Background />
             <div className="fixed top-0 left-0 w-full h-full bg-indigo-950/40 z-[-1]" />
               <ClientLayout>
                 {children}
