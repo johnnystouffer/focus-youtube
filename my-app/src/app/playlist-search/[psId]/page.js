@@ -8,7 +8,7 @@ export default async function PlaylistSearchPage({ params }) {
 
   const res = await fetch(
     `${process.env.SITE_URL}/api/search?text=${psId}&type=playlist`,
-    { cache: "no-store" }
+    { cache: "default" }
   );
 
   const initialPlaylists = await res.json();

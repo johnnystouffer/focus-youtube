@@ -6,6 +6,7 @@ import Dropdown from "@/components/Dropdown";
 import FontClassMap from "@/components/FontClassMap";
 import Loading from "@/components/Loading";
 import Link from "next/link";
+import data from "../../../public/assets/backgrounds.json";
  
  
 export default function Settings() { 
@@ -16,6 +17,9 @@ export default function Settings() {
     const [desc, setDesc] = useState(true); 
     const [likes, setLikes] = useState(true); 
     const [loading, setLoading] = useState(false);
+    const [background, setBackground] = useState("Select a background");
+
+    const backgrounds = data.data;
     
     useEffect(() => { 
         setLoading(true);
@@ -23,6 +27,7 @@ export default function Settings() {
         const savedComments = localStorage.getItem("comments") || "Disabled"; 
         const savedDesc = localStorage.getItem("desc") || "Enabled"; 
         const savedLikes = localStorage.getItem("likes") || "Enabled";
+        const savedBackground = localStorage.getItem("background") || "Select a background";
 
         Object.values(FontClassMap).forEach((cls) => document.body.classList.remove(cls)); 
         document.body.classList.add(savedFont); 
@@ -31,6 +36,7 @@ export default function Settings() {
         setComments(savedComments === "Enabled"); 
         setDesc(savedDesc === "Enabled"); 
         setLikes(savedLikes === "Enabled"); 
+        setBackground(savedBackground);
         setLoading(false);
     }, []); 
         
@@ -44,7 +50,13 @@ export default function Settings() {
         let newF = localStorage.getItem("font"); 
         document.body.classList.add(newF); 
         selectFont(newF); 
-    } 
+    }
+
+    const newBackground = (val) => {
+        localStorage.setItem("background", val);
+        setBackground(val);
+        window.dispatchEvent(new Event('backgroundChange'));
+    }
     
     const commentOption = (val) => { 
         localStorage.setItem("comments", val); 
@@ -73,6 +85,11 @@ export default function Settings() {
                     <div className="w-full mb-6"> 
                         <h1 className="text-xl mb-1">Change Font</h1> 
                         <Dropdown options={Object.entries(FontClassMap)} onSelect={newFont} val={font}></Dropdown> 
+                    </div> 
+
+                    <div className="w-full mb-6"> 
+                        <h1 className="text-xl mb-1">Change Background</h1> 
+                        <Dropdown options={backgrounds.map((item) => item.id)} onSelect={newBackground} val={background}></Dropdown> 
                     </div> 
 
                     <div className="w-full mb-6"> 

@@ -41,7 +41,6 @@ export default function Home() {
         </h1>
       </div>
 
-      {/* Inline option selector */}
       <div className="flex gap-2 mt-2" role="tablist" aria-label="Search type">
         {OPTIONS.map((n) => {
           const selected = option === n;
