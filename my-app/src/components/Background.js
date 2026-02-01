@@ -1,70 +1,40 @@
 "use client";
 
+import data from "../../public/assets/backgrounds.json";
 import { useEffect, useState } from "react";
 
-const API_URL = "https://api.plaza.one/v2/backgrounds";
 const NONE_URL = "null";
 
 export default function Background({ backgroundId }) {
 
       const [backgroundUrl, setBackgroundUrl] = useState(NONE_URL);
       const [loading, setLoading] = useState(true);
+
+      const backgrounds = data.data;
     
       const fetchBackground = async () => {
+            try {
+                let resolvedId = backgroundId;
 
-            if (localStorage.getItem("background")) {
-                const savedBackground = localStorage.getItem("background");
-                try {
-                    const response = await fetch(API_URL + `/${savedBackground}`);
-                    const data = await response.json();
-                    
-                    if (data) {
-                        setBackgroundUrl(data.data.video_src);
-                    }
-                } catch (error) {
-            
-                    console.log("We got an error :(");
-                    console.error("Error fetching background:", error);
-                    setBackgroundUrl(NONE_URL);
-                } finally {
-                    setLoading(false);
+                if (localStorage.getItem("background")) {
+                    resolvedId = localStorage.getItem("background");
                 }
 
-            }
+                const backgroundData = resolvedId
+                    ? backgrounds.find((item) => String(item.id) === String(resolvedId))
+                    : backgrounds[0];
 
-            else if (!backgroundId) {
-                try {
-
-                    const response = await fetch(API_URL);            
-                    const data = await response.json();
-
-                    if (data) {
-                        setBackgroundUrl(data.data.video_src);
-                    }
-                } catch (error) {
-            
-                    console.log("We got an error :(");
-                    console.error("Error fetching background:", error);
+                if (backgroundData?.video_src) {
+                    setBackgroundUrl(backgroundData.video_src);
+                } else {
                     setBackgroundUrl(NONE_URL);
-                } finally {
-                    setLoading(false);
                 }
-            }
-            else {
-                try {
-                    const response = await fetch(API_URL + `/${backgroundId}`);
-                    const data = await response.json();
-
-                    if (data) {
-                        setBackgroundUrl(data.data.video_src);
-                    }
-                } catch (error) {
-                    console.log("We got an error :(");
-                    console.error("Error fetching background:", error);
-                    setBackgroundUrl(NONE_URL);
-                } finally {
-                    setLoading(false);
-                }
+            } catch (error) {
+                console.log("We got an error :(");
+                console.error("Error fetching background:", error);
+                setBackgroundUrl(NONE_URL);
+            } finally {
+                setLoading(false);
             }
         }
 
